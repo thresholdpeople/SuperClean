@@ -1,8 +1,9 @@
-/* Classes that enable spawning Synths, setting up parameters (translations of their argument names to Clean abbreviations),
-and grouping them with their parameters */
+/* These classes enable grouping SynthDef parameter names with their Clean translations and setting up rules for when and how to spawn the individual Synths.
+They tie together Events with different entries in Dictionaries. */
 
 // Abstract Superclass of all other Modules
-CleanMod : CleanLibrary { // temp name, rename CleanModule after verification
+// TEMP NAME. rename CleanModule and replace original class file after testing and verification
+CleanMod : CleanLibrary {
 	var <>cName, <>sdName, <>params, <>dict, <>spawner;
 	var <server, <verbose;
 

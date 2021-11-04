@@ -1,4 +1,5 @@
 /* Everything to do with naming, storage, and lookup */
+
 // to replace CleanSoundLibrary
 
 CleanLibrary : CleanEvent {
@@ -141,7 +142,7 @@ CleanLibrary : CleanEvent {
 		this.prepModule(cName, sdName, parameters, type, nSpace, exclNS, description);
 
 		// Select the appropriate module type, and provide it with all relevant data
-		// Modules are ultimately what spawn synths
+		//
 		// module = CleanSourceModule(cName, sdName, parameters); // add arg values like this, or with reference to library?
 		// module = CleanSourceModule(type[cName], type[cName][\metadata][\instrument], type[cName][\parameters])
 	}
@@ -182,7 +183,7 @@ CleanLibrary : CleanEvent {
 		// Place module in specified signal chain location
 		this.orderModule(type, cName, modulePosition);
 
-		// Modules are ultimately what spawn synths
+		//
 		// module = CleanGlobalModule(cName, sDefName, parameters); // add arg values like this, or with reference to library?
 		// module = CleanSourceModule(type[cName], type[cName][\metadata][\instrument], type[cName][\parameters])
 	}
@@ -229,7 +230,8 @@ CleanLibrary : CleanEvent {
 	}
 
 
-/* likely unnecessary
+	/*
+	LIKELY UNNECESSARY
 	typeSelector { |type|
 		^switch(type,
 			\buffer, { samples.buffers },
