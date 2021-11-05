@@ -1198,6 +1198,7 @@ SynthDef(\clean_instanceSumBus, {
 	agcDrive = agcDrive + ((drive > 1) * agcDrive.neg * 2) + ((drive <= 1) * 0.0625);
 	agcClean = drive.linlin(1.1, 10, 1, 0.375, \min) + ((drive <= 1) * 0.25);
 	ampEnv = Env.linen(attack, sustainTime, release, 1, ampEnvCurve).kr(Done.freeGroup, gate);
+	// ampEnv = Env.asr(attack, 1.0, release, ampEnvCurve).kr(Done.freeGroup, gate);
 	signal = In.ar(input, ~clean.numChannels);
 	signal = (
 		((signal * drive * gain).tanh * (amp * agcDrive) * (drive > 0)) +
