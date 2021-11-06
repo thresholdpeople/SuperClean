@@ -38,7 +38,7 @@ Do no add out, amp, & pan conversions to Dictionaries for now. TBD why this brea
 // Call it by providing \folderNameOfLoadedSamples as a value to the \snd key in a pattern, and specify which sample by providing a number to the \num key.
 // Parameters:
 // num | bgn | len* | spd | lop | rtg | fdt |
-// amp | pan | atk | rel | crv | gate | timeScale | bnd | bnt | bno | bnc | freq | out
+// amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq | out
 // // (NEW: len, lop, rtg, fdt, amp, atk, rel, crv, gate, bnd, bnt, bno, bnc)
 * formerly end (now a time value, rather than position, set -1 for total sample length)
 
@@ -50,9 +50,10 @@ Do no add out, amp, & pan conversions to Dictionaries for now. TBD why this brea
 // Call it by providing \add as a value to the \snd key in a pattern, and by providing an array for frequency or pitch (or any other similar key).
 // Parameters:
 // ada | adr | slw | adc*
-// amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq
-// // (NEW: gate, timeScale, bnd, bnt, bno, bnc)
+// amp | pan | atk | rel | crv | gate | tsc* | bnd | bnt | bno | bnc | freq
+// // (NEW: gate, tsc*, bnd, bnt, bno, bnc)
 // *adc no longer for vol env- now for slideEnv
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_warp, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
@@ -108,7 +109,8 @@ SynthDef(\cleanS_warp, {
 // hr1 | hr2 | hr3 | hr4 | mi1 | mi2 | mi3 | mi4 | en1 | en2 | en3 | en4
 // er1 | er2 | er3 | er4 | cu1 | cu2 | cu3 | cu4 | det | uni
 // amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq | out
-// // (NEW: uni, gate, am1-4, er1-4, bnd, bnt, bno, bnc)
+// // (NEW: uni, gate, tsc*, am1-4, er1-4, bnd, bnt, bno, bnc)
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_fmx, {
 	var out = \out.ir, amp = [\amp1.kr(1), \amp2.kr(1), \amp3.kr(1), \amp4.kr(1), \amp.kr(0.3)], pan = \pan.kr, freq = \freq.kr(440).abs,
@@ -192,8 +194,9 @@ SynthDef(\cleanS_fmx, {
 // Call it by providing \ixa as a value to the \snd key in a pattern.
 // Parameters:
 // bes | ber | abs | abr | ths | thr
-// amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq | out
-// // (NEW: gate (and timeScale on ampEnv))
+// amp | pan | atk | rel | crv | gate | tsc* | bnd | bnt | bno | bnc | freq | out
+// // (NEW: gate (and tsc on ampEnv))
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_ixa, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
@@ -254,8 +257,9 @@ SynthDef(\cleanS_ixa, {
 // Call it by providing \sin as a value to the \snd key in a pattern.
 // Parameters:
 // iph
-// amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq | out
-// // (NEW: gate (and timeScale on ampEnv))
+// amp | pan | atk | rel | crv | gate | tsc* | bnd | bnt | bno | bnc | freq | out
+// // (NEW: gate (and tsc on ampEnv))
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_sine, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440), bend = \bend.kr.clip(-1, 1),
@@ -304,8 +308,9 @@ SynthDef(\cleanS_sine, {
 // Call it by providing \saw as a value to the \snd key in a pattern.
 // Parameters:
 // wid | iph
-// amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq | out
-// // (NEW: gate (and timeScale on ampEnv))
+// amp | pan | atk | rel | crv | gate | tsc* | bnd | bnt | bno | bnc | freq | out
+// // (NEW: gate (and tsc on ampEnv))
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_sawTri, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
@@ -355,15 +360,16 @@ SynthDef(\cleanS_sawTri, {
 // Call it by providing \sqr as a value to the \snd key in a pattern.
 // Parameters:
 // wid | iph*
-// amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq | out
+// amp | pan | atk | rel | crv | gate | tsc* | bnd | bnt | bno | bnc | freq | out
 // // (NEW: gate (and timeScale on ampEnv))
 // *iph not implemented with Pulse
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_pulse, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
 	bendTime = \bendTime.ir(0.2), bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 	attack = \attack.ir(0.001).abs, release = \release.ir(1).abs, ampEnvCurve = \ampEnvCurve.ir(-8), gate = \gate.tr(1),
-	timeScale = \timeScale.kr(1);
+	timeScale = \timeScale.kr(1).abs;
 	var initPhase = \initPhase.ir.clip(0, 1), width = \width.kr(0.25).clip(0, 1);
 
 	var bendEnv, bentFreq, ampEnv, signal;
@@ -408,8 +414,9 @@ SynthDef(\cleanS_pulse, {
 // Call it by providing \kps as a value to the \snd key in a pattern.
 // Parameters:
 // det (not currently implemented)
-// amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq | out
+// amp | pan | atk | rel | crv | gate | tsc* | bnd | bnt | bno | bnc | freq | out
 // // (NEW: amp, atk, rel, crv, gate)
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_karplusStrong, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
@@ -466,8 +473,9 @@ SynthDef(\cleanS_karplusStrong, {
 // Call it by providing \drm as a value to the \snd key in a pattern.
 // Parameters:
 // tun | fed | pew | fco
-// amp | pan | atk | rel | crv | gate | tsc | out
+// amp | pan | atk | rel | crv | gate | tsc* | out
 // // (NEW: fco, amp, atk, rel, crv, gate)
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_drum, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, attack = \attack.ir(0.01).abs, release = \release.ir(1).abs,
@@ -514,8 +522,9 @@ SynthDef(\cleanS_drum, {
 // Call it by providing \hat as a value to the \snd key in a pattern.
 // Parameters:
 // tun | bnd | cfr
-// amp | pan | atk | rel | crv | gate | tsc | bnt | bno | bnc | out
+// amp | pan | atk | rel | crv | gate | tsc* | bnt | bno | bnc | out
 // // (NEW: cfr, bnt, bno, bnc, amp, atk, rel, crv, gate)
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_hat, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, bend = \bend.kr.clip(-1, 1), bendTime = \bendTime.ir(0.2).abs,
@@ -624,15 +633,16 @@ SynthDef(\cleanS_clap, {
 // Call it by providing \dfd as a value to the \snd key in a pattern.
 // Parameters:
 // den | res | typ | nsl | ing
-// amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq | out
-// // (NEW: ing, timeScale, bnd, bnt, bno, bnc, gate)
+// amp | pan | atk | rel | crv | gate | tsc* | bnd | bnt | bno | bnc | freq | out
+// // (NEW: ing, tsc, bnd, bnt, bno, bnc, gate)
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_filterPing, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440), bend = \bend.kr.clip(-1, 1),
 	bendTime = \bendTime.ir(0.2).abs,bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 	attack = \attack.ir(0.001).abs, release = \release.ir(1).abs, ampEnvCurve = \ampEnvCurve.ir(-8), gate = \gate.tr(1),
 	timeScale = \timeScale.kr(1).abs, resonance = \resonance.kr(1).clip(0, 1.01), density = \density.kr.abs,
-	filterType = \filterType.kr.abs, noiseAmount = \noiseAmount.kr.abs, gain = \gain.kr(1).abs;
+	filterType = \filterType.kr.clip(0, 1), noiseAmount = \noiseAmount.kr.abs, gain = \gain.kr(1).abs;
 
 	var bendEnv, bentFreq, ampEnv, signal;
 
@@ -680,9 +690,9 @@ SynthDef(\cleanS_filterPing, {
 // Call it by providing \dfd as a value to the \snd key in a pattern.
 // Parameters:
 // frc | pos | bvl | bpr* | ind | fls | imp | inh
-// amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq | out
-// // (NEW: bvl, bpr*, ind, fls, imp, inh, (gate on env, no BWG), tsc, bnd, bnt, bno, bnc)
-// *bpr seems to not have any effect. it will be removed
+// amp | pan | atk | rel | crv | gate | tsc* | bnd | bnt | bno | bnc | freq | out
+// // (NEW: bvl, bpr, ind, fls, imp, inh, (gate on env, no BWG), tsc, bnd, bnt, bno, bnc)
+// *tsc formerly named sustain
 (
 SynthDef(\cleanS_waveguide, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
@@ -745,9 +755,10 @@ SynthDef(\cleanS_waveguide, {
 // Call it by providing \ex along with the number of channels (ie: \ex1 or \ex2, up to \ex8) as a value to the \snd key in a pattern.
 // Parameters:
 // inb
-// amp | pan | atk | rel | crv | gate | tsc | out
+// amp | pan | atk | rel | crv | gate | tsc* | out
 // // (NEW: inb, amp, atk, rel, crv, gate, tsc)
 // *2-channel version formerly named \in
+// *tsc formerly named sustain
 ({
 	var channelGroups = (0 .. 7);
 	var variableChannelExternalInputs = { |numCh|
@@ -796,9 +807,10 @@ SynthDef(\cleanS_waveguide, {
 // Call it by providing \es along with the number of channels (ie: \es1 or \es2, up to \es2) as a value to the \snd key in a pattern.
 // Parameters:
 // inb | win | det | iph | bgn | end | spd
-// amp | pan | atk | rel | crv | gate | tsc | bnd | bnt | bno | bnc | freq | out
+// amp | pan | atk | rel | crv | gate | tsc* | bnd | bnt | bno | bnc | freq | out
 // // (NEW: inb, bnt, bno, bnc, amp, atk, rel, crv, gate, (and tsc on ampEnv))
 // *formerly named \inr
+// *tsc formerly named sustain
 ({
 	var channelGroups = (0 .. 1);
 	var variableChannelExternalInputs = { |numCh|
@@ -867,9 +879,10 @@ SynthDef(\cleanS_waveguide, {
 // Call it by providing \rcv as a value to the \snd key in a pattern.
 // Parameters:
 // inb
-// amp | pan | atk | rel | crv | gate | tsc | out
+// amp | pan | atk | rel | crv | gate | tsc* | out
 // // (NEW: amp, gate, atk, rel, crv)
 // *formerly named \from
+// *tsc formerly named sustain
 (
 SynthDef(\cleanR_busReceiver, {
 	var out = \out.ir, input = \input.ir, amp = \amp.kr(0.3), pan = \pan.kr,  attack = \attack.ir(0.001).abs,
