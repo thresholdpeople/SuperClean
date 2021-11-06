@@ -186,7 +186,8 @@ CleanEvent {
 		~delaytime = ~dlt ? 0.0;
 		~delayfeedback = ~dlf ? 0.0;
 
-		~latency = ~latency + ~lag.value + (~offset.value * ~spd.value); // don't accidentally change this tho
+		// REMOVED 11/6. Seems ok??
+		// ~latency = ~latency + ~lag.value + (~offset.value * ~spd.value); // don't accidentally change this tho
 	}
 
 	getMsgFunc { |instrument|

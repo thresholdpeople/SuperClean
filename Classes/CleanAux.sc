@@ -158,15 +158,18 @@ CleanAux {
 
 			~cps = 1.0;
 			~offset = 0.0;
-			~bgn = 0.0;
-			~end = 1.0;
-			~spd = 1.0;
+
+			// REMOVED 11/6
+			// ~bgn = 0.0;
+			// ~end = 1.0;
+			// ~spd = 1.0; // CleanEvent line 190 references this. That was also removed, seemingly without issue
+
 			~pan = 0.5;
 			~amp = 0.5;
 			~cut = 0.0;
 			~nhp = 20;
 			~nlp = 20000;
-			~unit = \r;
+			// ~unit = \r; // REMOVED 11/6. Seems ok?
 			~midinote = #{ ~note ? ~num + (~octave * 12) };
 			~freq = #{
                 var degree = ~degree;
@@ -214,6 +217,8 @@ CleanAux {
 			~octaveRatio = 2.0;
 			~num = 0; // sample number or note
 			//~freq = #{ ~midinote.value.midicps };
+
+/* REMOVED 11/6
 			~delta = 1.0;
 			~latency = 0.0;
 			~lag = 0.0;
@@ -221,6 +226,7 @@ CleanAux {
 			~dry = 0.0;
 			~lock = 0; // if set to 1, syncs delay times with cps
 			~fadeTime = 0.001;
+*/
 
 			// values from the clean bus
 			~aux = this;
