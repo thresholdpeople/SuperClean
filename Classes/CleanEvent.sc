@@ -16,12 +16,13 @@ CleanEvent {
 			~diversion.(this) ?? {
 				this.mergeSoundEvent;
 				server = ~server.value; // as server is used a lot, make lookup more efficient
-				this.orderTimeSpan;
-				this.calcTimeSpan; // ~sustain is called here
+				// this.orderTimeSpan; // REMOVED 11/5. Seems ok?
+				// this.calcTimeSpan; // REMOVED 11/5. Required line 25 to be removed.
 				this.finaliseParameters;
 				// unless event diversion returns something, we proceed
 				~play.(this) ?? {
-					if(~sustain >= aux.minSustain) { this.playSynths }; // otherwise drop it.
+					this.playSynths; // added 11/5 to replace line 25
+					// if(~sustain >= aux.minSustain) { this.playSynths }; // otherwise drop it. // original code, removed 11/5
 				}
 			}
 		}
@@ -93,29 +94,10 @@ CleanEvent {
 			}
 
 
-			// synth's envelope release time persists (still happens) even if legato < 1
-			/*
-			~legato =  ~legato ?? { 1 } + (~dur ?? { 1 } * (~rel ?? {
-			if(~clean.soundLibrary.synthEvents[~snd].notNil) {
-			if(SynthDescLib.global.at(~clean.soundLibrary.synthEvents[~snd][0].[\instrument]).controlDict[\release].notNil) {
-			SynthDescLib.global.at(~clean.soundLibrary.synthEvents[~snd][0].[\instrument]).controlDict[\release].defaultValue
-			} {
-			if(SynthDescLib.global.at(~clean.soundLibrary.synthEvents[~snd][0].[\instrument]).controlDict[\rel].notNil) {
-			SynthDescLib.global.at(~clean.soundLibrary.synthEvents[~snd][0].[\instrument]).controlDict[\rel].defaultValue
-			} { 1 } }
-			} { if(SynthDescLib.global.at(~snd).notNil) {
-			if(SynthDescLib.global.at(~snd).controlDict[\release].notNil) {
-			SynthDescLib.global.at(~snd).controlDict[\release].defaultValue
-			} {
-			if(SynthDescLib.global.at(~snd).controlDict[\rel].notNil) {
-			SynthDescLib.global.at(~snd).controlDict[\rel].defaultValue
-			} {	1 } }
-			} { 1 } } }))
-			*/
 		}
 	}
 
-
+/* REMOVED 11/5. Seems ok?
 	orderTimeSpan {
 		var temp;
 		if(~end >= ~bgn) {
@@ -126,10 +108,14 @@ CleanEvent {
 		};
 		~length = absdif(~end, ~bgn);
 	}
+*/
 
 	calcTimeSpan {
 
 		var sustain, unitDuration;
+/*
+		// ~sustain = sustain.value; // added 11/5
+
 		var spd = ~spd.value;
 		var lop = ~lop.value;
 		var bnd = ~bnd.value;
@@ -139,7 +125,6 @@ CleanEvent {
 		~freq = ~freq.value;
 		unitDuration = ~unitDuration.value;
 		useUnit = unitDuration.notNil;
-
 
 		if (~unit == \c) {
 			spd = spd * ~cps * if(useUnit) { unitDuration  } { 1.0 }
@@ -152,6 +137,7 @@ CleanEvent {
 			endspd = spd * (1.0 + bnd);
 			avgspd = spd.abs + endspd.abs * 0.5;
 		};
+
 
 		if(useUnit) {
 			if(~unit == \rate) { ~unit = \r };
@@ -168,18 +154,18 @@ CleanEvent {
 				{ Error("this unit ('%') is not defined".format(~unit)).throw };
 			)
 		};
-
+*/
 		sustain = ~sustain.value ?? {
 			if(~legato.notNil) {
 				~delta * ~legato.value
-			} {
+			} /*{
 				unitDuration = unitDuration ? ~delta;
 				lop !? { unitDuration = unitDuration * lop.abs };
-			}
+			}*/
 		};
-
-		// end samples if sustain exceeds buffer duration
-		// for every buffer, unitDuration is (and should be) defined.
+/*
+		end samples if sustain exceeds buffer duration
+		for every buffer, unitDuration is (and should be) defined.
 		~buffer !? { sustain = min(unitDuration, sustain) };
 
 		~fadeTime = min(~fadeTime.value, sustain * 0.19098);
@@ -187,7 +173,7 @@ CleanEvent {
 		~sustain = sustain - (~fadeTime + ~fadeInTime);
 		~spd = spd;
 		~endspd = endspd;
-
+*/
 	}
 
 	finaliseParameters {
