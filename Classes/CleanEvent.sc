@@ -110,6 +110,7 @@ CleanEvent {
 	}
 */
 
+/* REMOVED 11/5. Seems ok?
 	calcTimeSpan {
 
 		var sustain, unitDuration;
@@ -175,6 +176,7 @@ CleanEvent {
 		~endspd = endspd;
 */
 	}
+*/
 
 	finaliseParameters {
 		~amp = ~amp.value.pow(2);
