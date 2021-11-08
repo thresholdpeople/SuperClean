@@ -53,6 +53,7 @@ As mentioned, Pdef is one of the most straightfoward ways to create a playing Pa
 Explore the help file for more specifics, but below is a boilerplate block of code:
 
 */
+```
 Pdef.help
 
 (
@@ -66,6 +67,7 @@ Pdef(\name,
 	])
 ).play
 )
+```
 
 /*
 
@@ -75,6 +77,7 @@ As a brief overview, \name is a Symbol, and it can be any unique Symbol, eg- \ba
 Pbind does most of the actual work of setting parameters and their values. You might see Pbinds written in a couple of ways in various documentation or code...
 
 */
+```
 (
 Pdef(\name,
 	Pbind(*[
@@ -98,6 +101,7 @@ Pdef(\name,
 	)
 ).play
 )
+```
 
 /*
 
@@ -138,6 +142,7 @@ snd:
 
 /* Technically, the bare minimum amount of information a SuperClean Pattern will require is type and snd. It will provide default values for any other parameter of consequence. A few examples: */
 
+```
 (
 Pdef(0, // name of the Pdef, note that it is set to an Integer. You will find many SuperClean examples which use this naming convention
 	Pbind(*[
@@ -157,6 +162,7 @@ Pdef(0, // note that evaluating this block of code effectively overwrites the pr
 	])
 ).play
 )
+```
 
 
 ## Timing Parameters:
@@ -186,6 +192,7 @@ delta:
 - Any floating point number greater than 0 can be used.
   - The default delta value is calculated by: */ delta = dur * stretch
 
+```
 // Some simple examples of this:
 (
 Pdef(0, // name of the Pdef, note that it is set to an Integer. You will find many SuperClean examples which use this naming convention
@@ -219,6 +226,7 @@ Pdef(0, // name of the Pdef, note that it is set to an Integer. You will find ma
 	])
 ).play
 )
+```
 
 
 ### As They Pertain to Modules
@@ -335,6 +343,7 @@ This level is builds */ note /* from the following parameters, all focused on ho
 
 Together these are converted into */ note /* by the following formulation: */ note = (degree + mtranspose).degreeToKey(scale, stepsPerOctave)
 
+```
 // Here are some examples of various combinations (note the use of Value Patterns to derive values for some parameters):
 (
 Pdef(0,
@@ -402,17 +411,30 @@ Pdef(0,
 	])
 ).play
 )
+```
 
-/* To find out more about Scales and Tuning, see their help files. And look through their respective directories to see which choices are available. */
+/*
+
+To find out more about Scales and Tuning, see their help files. And look through their respective directories to see which choices are available.
+
+*/
+```
 Scale.help
 Tuning.help
 
 Scale.directory
 Tuning.directory
-/* To provide a scale to the scale parameter, you can write Scale.nameOfScale as its value (it's also possible to have random or sequencable changes to this.
+```
+/*
+
+To provide a scale to the scale parameter, you can write Scale.nameOfScale as its value (it's also possible to have random or sequencable changes to this.
 For a scale with a non-standard tuning, you can write Scale.nameOfScale(\nameOfTuning) as the value for scale.
-To see what the degrees and tuning offsets are for a specific choice, you can evaluate that Scale: */
+To see what the degrees and tuning offsets are for a specific choice, you can evaluate that Scale:
+
+*/
+```
 Scale.pelog
+```
 
 
 ## Playing Patterns:
@@ -426,6 +448,7 @@ Thus far, all the examples have called play on the Pdef while evaluating the con
 It's possible to evaluate a Pattern without play-ing it immediately. Likewise, it's also possible to stop it. Or reset it (which is like going back to the beginning of the code without any wait).
 
 */
+```
 (
 Pdef(0, // create Pdef named 0, and define what the code is inside of it:
 	Pbind(*[
@@ -441,6 +464,7 @@ Pdef(0, // create Pdef named 0, and define what the code is inside of it:
 Pdef(0).play // play it
 Pdef(0).stop // stop it
 Pdef(0).reset // reset it
+```
 
 
 ### Quantization
@@ -452,13 +476,15 @@ You can also quantize when a Pattern starts playing after receiving a play messa
 There are a couple of ways to set the quantization, the most immediate way being as an argument provided with a play message, though there is a major drawback in doing it like this...
 
 */
+```
 Pdef(0).play(quant: 2) // quantize to two beats (depending on how you want to count time)
-
+```
 /*
 
 Setting quantization like this seems to only quantize it start that one time. It's possible to see the Pdef's quantization time by providing the Pdef with a quant message:
 
 */
+```
 Pdef(0).quant // this returns 1 upon evaluation! 1 is the default.
 
 // Set quantization to 2:
@@ -480,6 +506,7 @@ Pdef(0,
 	])
 )
 )
+```
 
 
 ### fadeTime // THIS CURRENTLY DOES NOT WORK!!
@@ -495,6 +522,7 @@ Note that for this to work, all modules will need to have an amp Control argumen
 How long this takes is set via providing the Pdef a fadeTime message.
 
 */
+```
 Pdef(0).fadeTime // evaluating this code will return what the current fadeTime is set to
 
 Pdef(0).fadeTime = 0.1 // set fadeTime to 0.1
@@ -513,6 +541,7 @@ Pdef(0,
 	])
 )
 )
+```
 
 ### Clocking
 
@@ -523,6 +552,7 @@ Patterns default to play on the default TempoClock, which can be called and mani
 By default, it runs at 60 beats-per minute. But note that it is set in beats-per-second!
 
 */
+```
 TempoClock.default.tempo // evaluting this returns a beats-per-second value
 
 TempoClock.default.tempo = 2 // sets to 120 BPM, or 2 BPS
@@ -530,23 +560,25 @@ TempoClock.default.tempo = 2 // sets to 120 BPM, or 2 BPS
 TempoClock.default.tempo = (80 / 60) // formula to work in BPM (desiredBPM / 60 seconds)
 
 TempoClock.default.beatDur // evaluating this returns how long each beat is, in seconds
-
+```
 /*
 
 It's also possible to create new TempoClocks, and set Pdefs to run on them:
 
 */
+```
 ~newClock = TempoClock(100 / 60).permanent_(true) // create a new TempoClock that's set to 100 BPM, and make sure it survives cmd-period
-
+```
 /*
 
 The ".permanent_(true)" part is very important! If TempoClock is created without it, pressing cmd-period (to kill everything currently running on the Server) also removes this Clock. If permanent is set to true, then the Clock will persist.
 
 */
+```
 ~newClock.tempo // returns 1.666 BPS
 
 ~newClock.beatDur // returns 0.6 seconds per beat
-
+```
 /*
 
 In order for a Pdef to become associated with a Clock, it cannot currently be playing.
@@ -557,6 +589,7 @@ When a Pdef is stopped there are two ways to specify which Clock to use:
 
 */
 
+```
 // If the Pdef is already stopped, either:
 (
 Pdef(0).clock = ~newClock;
@@ -569,7 +602,7 @@ Pdef(0).play(~newClock)
 ~newClock.tempo = 7
 
 
-// It's possible to have different Pdefs playing on different Clocks!
+// It's also possible to have different Pdefs playing on different Clocks!
 
 ( // Pdefs run on TempoClock.default, by default
 Pdef(1,
@@ -581,6 +614,7 @@ Pdef(1,
 ).play
 )
 TempoClock.default.tempo = 0.75 // change the tempo of the default TempoClock without changing ~newClock's tempo
+```
 
 
 
