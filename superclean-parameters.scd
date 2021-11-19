@@ -8,14 +8,14 @@ There are two main types of effects: InstanceEffects and GlobalEffects.
 - Instance effects are, just like a sound-source, created for each Event instance, and are all in series. There are currently 28 different instance effects!
 
 - Global effects are all in parallel, and receive the post-instance effects signal of all still playing Events. There is a set of global effects per Aux Bus, and one can have as many Aux Buses as their computer can handle. Each Aux Bus can output to SuperCollider's main outputs, or each Aux can be routed to other outputs for multichannel speaker setups, or other routing schemes.
-  - Aux Buses are typically initialized in your startup file. Specifically by the providing an instance of SuperClean the start message, with an array of outputs.
-    - For example: ~clean.start([0, 2, 4]) creates 3 Aux Buses, with their outputs set to channels 1 & 2, channels 3 & 4, and channels 5 & 6, output buses in SuperCollider, respectively. Theses commonly will correspond to one's audio interface, or other out-of-SuperCollider and into-something-else channels.
+  - Aux Buses are typically initialized in your startup file. Specifically by providing an instance of SuperClean the start message, and an array of outputs.
+    - For example: ~clean.start([0, 2, 4]) creates 3 Aux Buses, with their outputs set to channels 1 & 2, channels 3 & 4, and channels 5 & 6, output buses in SuperCollider, respectively. These commonly will correspond to one's audio interface, or other out-of-SuperCollider and into-something-else channels.
 
 
 All SoundSources, InstanceEffects, and GlobalEffects are SynthDefs within SuperCollider, and it is possible to add your own to each of these types of modules. Instructions on how to do this are forthcoming, but looking over the files in SuperClean's Modules/ folder should provide examples on how to currently do this.
 
 
-Traditionally SuperClean's modules use unique three-letter combos to for each parameter of each module. It's also possible to use a SynthDef's Control argument name.
+Traditionally SuperClean's modules use unique three-letter combos for each parameter of each module. It's also possible to use a SynthDef's Control argument name.
 
 Certain parameters are for controlling aspects of a Pattern or Event.
 
@@ -30,7 +30,7 @@ Below is a guide to the various modules and their parameters, as well as specifi
 
 We'll cover pattern parameters first, then SoundSources, then InstanceEffects, and finally GlobalEffects.
 
-Most, but not all values for parameters are set to be values between 0.0 to 1.0, unless otherwise indicated. Occasionally even though a parameter is configured to receive 0.0 to 1.0 values, different numbers can be provided for creative results. The simplest example is setting the amplitude of a module to be greater than 1.0 in order to distort the signal.
+Most, but not all values for parameters are set to be values between 0.0 and 1.0, unless otherwise indicated. Occasionally even though a parameter is configured to receive 0.0 to 1.0 values, different numbers can be provided for creative results. The simplest example is setting the amplitude of a module to be greater than 1.0 in order to distort the signal.
 - Speaking of distortion, the final module in each Aux Bus's signal chain contains a limiter which will provide crunchy distortion while also saving your ears!
 
 */
@@ -46,7 +46,7 @@ Most, but not all values for parameters are set to be values between 0.0 to 1.0,
 
 Each time a Pattern runs through all the parameters and their values, it will create what's called an Event. A simple way to consider this is that a Pattern is like a sequencer, and the Event is what each step of the sequence causes to happen. Depending on certain values, Events can either overlap each other, or cut each other off, which means that certain sounds can continue to sound out, even though the sequence has moved on.
 
-Furthermore, not every parameter needs to be explicitly stated in a Pattern. Many parameters have default values, and so if a parameter is not specifically set in a pattern, but the value for that parameter is actually important, its default value will be used. This may sound a bit confusing, but it actuallys allows you to write Patterns which do not require many lines of code, yet still function.
+Furthermore, not every parameter needs to be explicitly stated in a Pattern. Many parameters have default values, and so if a parameter is not specifically set in a pattern, but the value for that parameter is actually important, its default value will be used. This may sound a bit confusing, but it actually allows you to write Patterns which do not require many lines of code, yet still function.
 
 As mentioned, Pdef is one of the most straightfoward ways to create a playing Pattern which can be modified over time. Most typically, a Pdef will receive two arguments, the name of the Pdef, and a Pbind to drive the main Event creation.
 
@@ -54,7 +54,7 @@ Explore the help file for more specifics, but below is a boilerplate block of co
 
 */
 ```
-Pdef.help
+https://doc.sccode.org/Classes/Pdef.html
 
 (
 Pdef(\name,
@@ -105,12 +105,12 @@ Pdef(\name,
 
 /*
 
-Both blocks above are functionally equivalent, and it's a matter of taste on how you want to write things. The only thing is you can't mix and match styles _within the same Pbind!_
+Both blocks above are functionally equivalent, and it's a matter of taste how you want to write things. The only thing is you can't mix and match styles _within the same Pbind!_
 - You might also commonly find examples of Pbinds that are not nested in Pdefs at all.
 
 Pbinds "bind" together a list of Key Value Pairs. That is, a list of parameters and their associated settings/values.
 
-In the above examples each pair of keys (parameters) and their values (settings) are on the same line (though strictly speaking, they do not have to be).
+In the above examples each pair of keys (parameters) and their values (settings) are on the same line (though strictly speaking, syntactically they do not have to be).
 Some of the key value pairs above are specific Pattern parameters, while others are specific to a module.
 
 The block of code above will create a SuperClean Pattern, which will generate a SoundSource called \clean_sine every 1.0 seconds. Each generated instance of \clean_sine will play at 440Hz, with an amplitude of 0.3.
@@ -120,15 +120,15 @@ type: \cln,
 snd: \sin,
 freq: 440,
 
-Also, from here on out, when you see Pattern, it will imply a Pbind nested within a Pdef, though, for more advanced use, there are other possibilities...
+Also, from here on out, when you see a Pattern, it will imply a Pbind nested within a Pdef, though, for more advanced use, there are other possibilities...
 
 */
 
 
 ## Setup Parameters:
 
-type: \cln,
-/* This specifies that it this is a "SuperClean Pattern" type. Types more or less alert patterns to particular parameter names theys should respond to, and any default values which they may already have.
+type: \cln,  
+/* This specifies that this is a "SuperClean Pattern" type. Types more or less alert patterns to particular parameter names they should respond to, and any default values which they may already have.
 Set this to \cln; \cln means SuperClean.
 - If you omit this line, things will not function correctly. Therefore it's most typical to put it as the first line of your Pattern. */
 
@@ -136,7 +136,7 @@ snd:
 /* Provide it the name of the SoundSource you will use. The name should be formatted as a Symbol (start with either a backslash (\) or be inside of single quotes ('sourceName').
 - In the above example \sin is SuperClean shorthand for \clean_sine, which is the name of a specific SynthDef.
   - There are many types of SoundSources already built in to SuperClean. Many are synthesizers, and others are sample players.
-- Providing a synth's name, or the name of loaded sample folder will cause that type of SoundSource to play.
+- Providing a synth's name, or the name of a sample folder which has previously been loaded into RAM will cause that type of SoundSource to play.
   - This can be a static entity given as a Symbol, or even a Pattern which allows the SoundSource to change from one event to the next!
     - Specifically for non-sample playing SoundSources: as will be discussed later, the name can either be its three-letter SuperClean name, or the long form name given inside of its SynthDef. */
 
@@ -263,7 +263,7 @@ sustain:
 
 Determining how a given SoundSource, or other relevant module, reacts to frequency or pitch must technically be done within the SynthDef which defines that module.
 
-Most commonly, freq is the name of the Control argument used to do so in SynthDefs. Most SoundSources (but not all, eg- /drm, /hat, and /clp) provide freq as an argument name. Sometimes effects may do so as well, when applicable (\fsh - a frequency shifter).
+Most commonly, freq is the name of the Control argument used to do this in SynthDefs. Most SoundSources (but not all, eg- /drm, /hat, and /clp) provide freq as an argument name. Sometimes effects may do this as well, when applicable (\fsh - a frequency shifter).
 
 However, this is in the Pattern section because there are a bunch of what may be considered "convenience" parameters that simplify deriving pitch and/or frequency values that need-not be defined in a module's SynthDef at all.
 
@@ -285,7 +285,7 @@ freq is the highest level of all these other parameters described below. This me
 
 All the other parameters are ultimately converted into freq by underlying Pattern mechanisms, and then that value is sent to relevant modules, to their freq parameter.
 
-This is am important consideration because it means that none of these other parameters will do anything for modules that do not have freq as an argument!
+This is an important consideration because it means that none of these other parameters affect modules that do not have freq as an argument!
 
 Furthermore, these other parameters, just like freq relative to them, also have a hierarchy, and they will behave in the same way as freq does:
 - Certain parameters may be derived from lower level parameters.
@@ -334,7 +334,7 @@ Together these are converted into */ midinote /* by the following formulation: *
 
 If this is obscure when written out like this, then perhaps going straight ahead to the next level down will hopefully make things more clear.
 
-This level is builds */ note /* from the following parameters, all focused on how a note may be distinct from other notes:
+This level builds */ note /* from the following parameters, all focused on how a note may be distinct from other notes:
 - degree: the degree within a scale; 0 is the default
 - mtranspose: modal transposition; 0 is the default
 - scale: mapping of scale degrees into semi-tones, eg- Major is [0, 2, 4, 5, 7, 9, 11], which is also the default
@@ -445,7 +445,7 @@ Scale.pelog
 
 Thus far, all the examples have called play on the Pdef while evaluating the contents of the code inside it. But sometimes you might want to evaluate a Pattern without necessarily playing it immediately (or even sometimes at all!)
 
-It's possible to evaluate a Pattern without play-ing it immediately. Likewise, it's also possible to stop it. Or reset it (which is like going back to the beginning of the code without any wait).
+It's possible to evaluate a Pattern without play-ing it immediately. Likewise, it's also possible to stop it. Or reset it (which is like going back to the beginning of the code immediately).
 
 */
 ```
@@ -612,7 +612,7 @@ Pdef(1,
 		amp: 0.65,
 	])
 ).play
-)
+);
 TempoClock.default.tempo = 0.75 // change the tempo of the default TempoClock without changing ~newClock's tempo
 ```
 
@@ -658,10 +658,10 @@ This may not be a complete list of parameter names.
 The value range for the below parameters is 0.0 to 1.0 unless otherwise indicated.
 
 snd:	Sample folder or synth name.
-num:	Which sample in a folder, from zero up to the amount of files in that folder and then wraps back around.
+num:	Which sample in a folder, from zero up to the amount of files in that folder after which it wraps back around.
 pan:	Pans the sound.
 shp:	Waveshaping amount.
-sac:	Shaping amplitude compensation.
+sac:	Waveshaping amplitude compensation.
 slo:	Waveshaping low.
 shi:	Waveshaping high.
 sho:	Waveshaping offset.
@@ -669,7 +669,7 @@ lot:	Waveshaping low threshold.
 hit:	Waveshaping high threshold.
 dst:	A crunchy distortion with a lot of high harmonics.
 tri:	A triode-like distortion.
-amp:	Make it louder! Can go above one to lean into the limiter.
+amp:	Amplitude. Can go above one to lean into the limiter.
 spd:	Sample playback speed, default is 1.0, negative numbers play the sample backwards, slower playback rates closer to 0
 atk:	The attack time of the envelope, the envelope parameters are expressed in seconds, 1.0 here means a one second fade in time.
 hld:	The hold time of the amplitude envelope.
@@ -683,7 +683,7 @@ hpq:	High pass filter resonance.
 bpq:	Band pass filter resonance.
 lhf:	Low & high pass filter combo where 0.5 does nothing, 0.0 sets the lpf to 20hz and 1.0 sets the hpf to 20000
 dla:	Delay amplitude.
-dlf:	Delay feedback, proly best to think of 0.94 as the max sane value.
+dlf:	Delay feedback, probably best to think of 0.94 as the maximum sane value here.
 dlt:	Delay time, value range is a very low float to 16.0
 rin:	Set the amplitude of the input to the reverb.
 rev:	Reverb time (or room size, if we can imagine that).
@@ -695,8 +695,8 @@ bnt:	Bend time. Accepts positive values. This value gets multiplied with the sus
 bno:	Offset the time at which the bend begins.
 bnc:	Bend curvature. Accepts positive and negative values.
 lop:	How many times to loop the file, takes integers, works in consort with the envelope parameters.
-cut:	Cut groups, cuts itself as well as other things in the same cut group. Rougher edges than legato in terms of sound tho so.
-aux:	An auxiliary output, you can use these for different outputs or same output with different effects depending on your startup file.
+cut:	Cut groups, cuts itself as well as other things in the same cut group. Rougher edges than legato in terms of sound though so, I'd use legato instead.
+aux:	An auxiliary output, you can use these for different outputs, or the same output with different effects, depending on your startup file.
 rma:	Ringmodulation wet amount.
 rmf:	Ringmodulation frequency.
 rdf:	The ringmodulation frequency to glissando in from, which can be above or below rmf, range is 20 to 20000
@@ -710,14 +710,14 @@ ocq:	Quarter-frequency harmonics (two octaves down).
 fsh:	Frequency shift, value range goes both positive and negative, works in combination with fsm, try values -32 to 32
 fsm:	Frequency shift multiplier, value range goes both positive and negative, works in combination with fsh, try values -4 to 4
 hal:	A hall reverb, this is the wet parameter, or put another way, the amplitude of the reverb.
-rts:	The RT60 value of the reverb. This goes from 0 to 999. That top value is approaching inifity. It is super duper long.
+rts:	The RT60 value of the hal reverb. This goes from 0 to 999. That top value is approaching inifity. It is super duper long.
 edf:	Early diffusion of the hal reverb.
 ldf:	Late diffusion of the hal reverb.
 hhp:	A high pass filter before the hal reverb. Value range is 20 to 20000.
 hlp:	A low pass filter before the hal reverb. Value range is 20 to 20000.
-tnh:	 Wet mix of the tanh based distortion. Unlike  other distortions this is added after synths are summed. Try a fifth through this.
+tnh:	Wet mix of the tanh based distortion. Unlike other distortions, this is added after synths are summed. Try a fifth through this.
 tnb:	Low pass filter before the tanh based distortion.
-tng:	Tanh gain stage, this makes tons of ditortion. Range is 0.0 to 999.0
+tng:	Tanh gain stage, this makes tons of distortion. Range is 0.0 to 999.0
 tna:	Low pass filter after the tanh based distortion.
 fuz:	A very raw kind of distortion. Has a built in gate. Very touch sensitive. Value range is 0 or 1. On or off.
 fzv:	Fuzz value. Range is zero to infinity.
@@ -726,8 +726,8 @@ cai:	The input or send into the cav reverb. Range is zero to one.
 cvt:	The cav reverb time. Range is zero to one.
 cvd:	The cav reverb dampening. Range is zero to one.
 cvl:	The cav low pass filter after the reverb. Range is zero to one.
-bit:	Roughly translates to bit rate reduction. Value range is zero to infinity. Lower values give more action.
-sam:	Roughly translates to sample rate reduction. Value range is zero to infinity. Higher values give more action.
+bit:	Roughly translates to bit rate reduction. Value range is zero to infinity. Lower values yield more action.
+sam:	Roughly translates to sample rate reduction. Value range is zero to infinity. Higher values yield more action.
 
 
 The parameters below aren't actually part of SuperClean, but are very useful
@@ -736,14 +736,14 @@ and because SuperClean is running inside SuperCollider, we can use them.
 dur:        The duration between events, range is a float above zero to infity, zero is infinitely fast, so, you mos def never want to do that.
 midinote:   0 to 127. 60 is default. Interestingly accepts floats which allows for microtonality
 freq:       When working with synths and we want to work with frequencies instead of midi note numbers as above, accepts integers 20 to 20000
-scale:      Choose scale, for example: Scale.harmonicMinor, add a tuning there like this: Scale.harmonicMinor.tuning_(Tuning.sept1)
-degree:     Negative infinity to infinity really but proly there will be seven degrees in scale.
-octave:     Choose the octave. Range is zero infinity really but a reasonable range is more like 1 to 6. Accepts floats which is crazy/fun
-ctranspose: Chromatic transpostion. All keys on piano. Range is something like integers between -63 and 64 but depends on everything else.
+scale:      Choose scale, for example: Scale.harmonicMinor, add a tuning there like this: Scale.harmonicMinor(\sept1)
+degree:     Negative infinity to postitive infinity really, but very commonly there will be seven degrees in a scale
+octave:     Choose the octave. Range is zero to infinity really, but a reasonable range is more like 1 to 6. Accepts floats which is crazy/fun
+ctranspose: Chromatic transposition. All the keys on the piano. Range is something like integers between -63 and 64 but depends on everything else.
 mtranspose: Modal transposition of degree within a scale. Works in combination with other keys like degree and scale.
 harmonic:   Multiplies the frequency determined by midinote, typically to an overtone. https://en.wikipedia.org/wiki/Overtone
 
-stepsPerOctave has no documentation that I can find. Very little is know about this strange parameter other than that it's default is 12.
+stepsPerOctave's default value is 12.
 Try untoggling that key in this example:
 
 (
@@ -758,7 +758,6 @@ Pdef(0,
 	])
 ).play
 )
-
 
 There are some notable exceptions in this list of keys that provide convenient
 calculation of frequency when compared to the equivalent list in SuperCollider.
@@ -808,7 +807,7 @@ cu4:
 
 
 In the \drm synth definition you can change the tuning of the drum with tun.
-Strange wrapping and nonlinear range. Start trying values around 1.  The fed
+Strange wrapping and nonlinear range. Start by trying values around 1.  The fed
 parameter controls the amount of feedback inside the oscillator. Value range is
 0 to a lot where 0 is a sine, the higher up you go the noisier. The pew
 parameter controls the space blaster to metal kickdrum morph. Lower values are
@@ -829,12 +828,12 @@ bnd:
 
 The \clp synth definition uses a full frequency range impulse that is run through
 a narrow band-pass filter and a fast envelope for the clap's noise burst, and a
-high-pass filter to provide some body at the onset of the hit.  Set the volume of
+high-pass filter to provide some body at the onset of the hit. Set the volume of
 the body by using the tha parameter (thump amp), and control it's initial pitchbend
-amount with bdy, and use bdt to set how long it takes to get there.  Thump's tuning
-can also be adjusted relative to the main clap sound by usingthe tho key. Control the
+amount with bdy, and use bdt to set how long it takes to get there. Thump's tuning
+can also be adjusted relative to the main clap sound by using the tho key. Control the
 character of the sound with the srp (sharpness) parameter, which allows you to tune
-the claps, sounding maybe a bit more "real" somewhere between 0.3 and 0.35, and more
+the claps. Sounds maybe a bit more "real" somewhere between 0.3 and 0.35, and more
 synthetic elsewhere. The srq parameter, the band-pass filter's resonance allows you to
 dial in the tone a bit more. The dmp key controls a final LPF that acts a dampener for the sound.
 
@@ -846,7 +845,7 @@ tho: (0.01, 1)+ parameter range
 dmp: (20, 20000) parameter range
 
 
-The \kps synth definition Karplus-Strong physical modeling of a vibrating string,
+The \kps synth definition is Karplus-Strong physical modeling of a vibrating string,
 using a delay line (CombL) excited by an intial pulse (Impulse)
 freq or midinote controls the frequency. bnd is used for a pitch glide. Value range is -1 to 1.
 
@@ -859,8 +858,9 @@ bnc:
 
 The \sin synth definition is a sine wave oscillator. It accepts freq and midinote
 and parameters like those. It can also let you control the initial phase with the
-iph parameter. This might not be very exciting since it is a sine wave and frequency
-is either 100% phase cancelled out or not at all.
+iph parameter. This might not be very exciting since it is a sine wave and frequencies
+are either 100% phase cancelled out or not at all when you stack a bunch on top of 
+each other.
 
 freq:
 iph:
@@ -898,7 +898,7 @@ bnc:
 The \dfd synth definition is a transient excited filter, the filter itself is noisy and can selfoscillate
 den: the density of transients.
 res: the resonance of the filter. 1 is a tremendous sweetspot. Range is 0 to 1.01.
-typ: the type of filter where 0.0 is low pass and 1.0 is high pass.
+typ: controls the type of filter, where 0.0 is low pass and 1.0 is high pass.
 nsl: the noise level. Range is 0 to infinity. Go easy here, as a little goes a very long way.
 
 freq:
