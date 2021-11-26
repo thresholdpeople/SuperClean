@@ -1,6 +1,5 @@
-# Intro
-
 /*
+# Intro
 
 SuperClean uses Patterns to create Events. These Events can control parameters of a whole slew of SoundSources and route them through various effects.
 There are two main types of effects: InstanceEffects and GlobalEffects.
@@ -33,7 +32,7 @@ We'll cover pattern parameters first, then SoundSources, then InstanceEffects, a
 Most, but not all values for parameters are set to be values between 0.0 to 1.0, unless otherwise indicated. Occasionally even though a parameter is configured to receive 0.0 to 1.0 values, different numbers can be provided for creative results. The simplest example is setting the amplitude of a module to be greater than 1.0 in order to distort the signal.
 - Speaking of distortion, the final module in each Aux Bus's signal chain contains a limiter which will provide crunchy distortion while also saving your ears!
 
-*/
+
 
 
 
@@ -42,7 +41,6 @@ Most, but not all values for parameters are set to be values between 0.0 to 1.0,
 
 ## Common Pattern Parameters:
 
-/*
 
 Each time a Pattern runs through all the parameters and their values, it will create what's called an Event. A simple way to consider this is that a Pattern is like a sequencer, and the Event is what each step of the sequence causes to happen. Depending on certain values, Events can either overlap each other, or cut each other off, which means that certain sounds can continue to sound out, even though the sequence has moved on.
 
@@ -52,9 +50,8 @@ As mentioned, Pdef is one of the most straightfoward ways to create a playing Pa
 
 Explore the help file for more specifics, but below is a boilerplate block of code:
 
-*/
-```
-Pdef.help
+*/```
+Pdef.help // < evaluate this line
 
 (
 Pdef(\name,
@@ -67,17 +64,14 @@ Pdef(\name,
 	])
 ).play
 )
-```
-
-/*
+```/*
 
 As a brief overview, \name is a Symbol, and it can be any unique Symbol, eg- \bass, \kicks, \drones, or even an Integer.
 - You can have several Pdefs ".play"ing at the same time, so long as each Pdef has a unique name. If a Pdef shares the same name as a different Pdef, it will overwrite its definition, effectively replacing the block of code it contains. This can also be used as a compositional or performative strategy!
 
 Pbind does most of the actual work of setting parameters and their values. You might see Pbinds written in a couple of ways in various documentation or code...
 
-*/
-```
+*/```
 (
 Pdef(\name,
 	Pbind(*[
@@ -101,9 +95,7 @@ Pdef(\name,
 	)
 ).play
 )
-```
-
-/*
+```/*
 
 Both blocks above are functionally equivalent, and it's a matter of taste on how you want to write things. The only thing is you can't mix and match styles _within the same Pbind!_
 - You might also commonly find examples of Pbinds that are not nested in Pdefs at all.
@@ -122,27 +114,32 @@ freq: 440,
 
 Also, from here on out, when you see Pattern, it will imply a Pbind nested within a Pdef, though, for more advanced use, there are other possibilities...
 
-*/
+
 
 
 ## Setup Parameters:
 
-type: \cln,
-/* This specifies that it this is a "SuperClean Pattern" type. Types more or less alert patterns to particular parameter names theys should respond to, and any default values which they may already have.
-Set this to \cln; \cln means SuperClean.
-- If you omit this line, things will not function correctly. Therefore it's most typical to put it as the first line of your Pattern. */
 
+*/```
+type: \cln,
+```/*
+This specifies that it this is a "SuperClean Pattern" type. Types more or less alert patterns to particular parameter names theys should respond to, and any default values which they may already have.
+Set this to \cln; \cln means SuperClean.
+- If you omit this line, things will not function correctly. Therefore it's most typical to put it as the first line of your Pattern.
+
+*/```
 snd:
-/* Provide it the name of the SoundSource you will use. The name should be formatted as a Symbol (start with either a backslash (\) or be inside of single quotes ('sourceName').
+```/*
+Provide it the name of the SoundSource you will use. The name should be formatted as a Symbol (start with either a backslash (\) or be inside of single quotes ('sourceName').
 - In the above example \sin is SuperClean shorthand for \clean_sine, which is the name of a specific SynthDef.
   - There are many types of SoundSources already built in to SuperClean. Many are synthesizers, and others are sample players.
 - Providing a synth's name, or the name of loaded sample folder will cause that type of SoundSource to play.
   - This can be a static entity given as a Symbol, or even a Pattern which allows the SoundSource to change from one event to the next!
-    - Specifically for non-sample playing SoundSources: as will be discussed later, the name can either be its three-letter SuperClean name, or the long form name given inside of its SynthDef. */
+    - Specifically for non-sample playing SoundSources: as will be discussed later, the name can either be its three-letter SuperClean name, or the long form name given inside of its SynthDef.
 
-/* Technically, the bare minimum amount of information a SuperClean Pattern will require is type and snd. It will provide default values for any other parameter of consequence. A few examples: */
+Technically, the bare minimum amount of information a SuperClean Pattern will require is type and snd. It will provide default values for any other parameter of consequence. A few examples:
 
-```
+*/```
 (
 Pdef(0, // name of the Pdef, note that it is set to an Integer. You will find many SuperClean examples which use this naming convention
 	Pbind(*[
@@ -162,44 +159,51 @@ Pdef(0, // note that evaluating this block of code effectively overwrites the pr
 	])
 ).play
 )
-```
+```/*
+
+
 
 
 ## Timing Parameters:
 
-### As They Pertain to an Event
 
-/*
+### As They Pertain to an Event
 
 Patterns run on an instance of TempoClock, and unless you explicitly set it, it is both the default TempoClock - TempoClock.default - with a default setting of 60 beats-per-minute. There are several timing parameters, ultimately these control either the length of each step within a Pattern or the length of time of each Event (technically these are not the same thing), or both.
 
-*/
 
+*/```
 dur:
-/* This is kind of like the length of each step, but more accurately the length of time until the next step (Event).
+```/*
+This is kind of like the length of each step, but more accurately the length of time until the next step (Event).
 - Any floating point number greater than 0 can be used.
   - The default dur value is 1.0. Which means that if dur is not explicitly set in a Pattern, its implied value is 1.0.
-It may be simplest to consider */ dur: 1 /* to correspond to either one beat or one bar (technically it's one beat in all the reference documentation).
-- So that */ dur: 0.5 /* either signifies an eigth note or a half note; 0.25 is one-sixteenth or a quarter; 2.0 is either a half note or two bars, etc. */
+It may be simplest to consider dur: 1 to correspond to either one beat or one bar (technically it's one beat in all the reference documentation).
+- So that dur: 0.5 either signifies an eigth note or a half note; 0.25 is one-sixteenth or a quarter; 2.0 is either a half note or two bars, etc.
 
+*/```
 stretch:
-/* This is a scaling factor for dur. */ dur: 1, stretch: 0.5 /* is equivalent to just setting dur to be 0.5. So actually, the length of time until the next step (Event) is defined by */ dur * stretch /*.
+```/*
+This is a scaling factor for dur. dur: 1, stretch: 0.5 is equivalent to just setting dur to be 0.5. So actually, the length of time until the next step (Event) is defined by:  dur * stretch.
 - Any floating point number greater than 0 can be used.
-  - The default stretch value is 1.0. Which means that if stretch is not explicitly set in a Pattern, its implied value is 1.0. */
+  - The default stretch value is 1.0. Which means that if stretch is not explicitly set in a Pattern, its implied value is 1.0.
 
+*/```
 delta:
-/* This is either implicitly created by using (providing values for) either/both dur and stretch (remember both have default values, so just because you didn't specify a value for the parameter doesn't mean it's not actually being used), or a value for delta can be explicitly provided, which means that it will override any values set for dur and/or stretch.
+```/*
+This is either implicitly created by using (providing values for) either/both dur and stretch (remember both have default values, so just because you didn't specify a value for the parameter doesn't mean it's not actually being used), or a value for delta can be explicitly provided, which means that it will override any values set for dur and/or stretch.
 - Any floating point number greater than 0 can be used.
-  - The default delta value is calculated by: */ delta = dur * stretch
+  - The default delta value is calculated by:  delta = dur * stretch
 
-```
-// Some simple examples of this:
+Some simple examples of this:
+
+*/```
 (
 Pdef(0, // name of the Pdef, note that it is set to an Integer. You will find many SuperClean examples which use this naming convention
 	Pbind(*[
 		type: \cln, // sets this Pbind to be a SuperClean Pattern
 		snd: \saw, // creates (plays) a triangle-saw variable wave synthesizer with default frequency, envelope, and amplitude values for each Event
-		dur: 0.5 // sets duration to be 2 beats long (stretch is implied, with a value of 1.0. dur * stretch = delta. 0.5 * 1.0 = 0.5)
+		dur: 0.5 // sets duration to be 2 beats long (stretch is implied, with a value of 1.0.  dur * stretch = delta. 0.5 * 1.0 = 0.5)
 	])
 ).play
 )
@@ -226,12 +230,10 @@ Pdef(0, // name of the Pdef, note that it is set to an Integer. You will find ma
 	])
 ).play
 )
-```
 
+```/*
 
 ### As They Pertain to Modules
-
-/*
 
 There are two other parameters which deal with timing:
 - legato
@@ -241,25 +243,28 @@ These parameters manipulate the potenial amount of time each Event can exist - w
 
 Effectively these parameters allow for Events to either end prematurely, or ring out and overlap with other, future Events.
 
-*/
-
+*/```
 legato:
-/* This is a scaling factor which allows you to specify how long to "hold" the Event. It is relative to the duration of each Event.
+```/*
+This is a scaling factor which allows you to specify how long to "hold" the Event. It is relative to the duration of each Event.
 - 1.0 means that the Event will exist for the same length as the duration of the Event. 0.5 means that the Event will exist for half the duration, theoretically cutting the Event short. 2.0 will allow the Event to exist for twice its duration, so it will theoreticaly overlap with the next created Event.
   - Theoretically because this does not actually stretch a SoundSource's amplitude envelope, so it may still decay to silence before the Event itself ceases to exist.
 - Any floating point number greater than 0 can be used.
-  - The default value is 1.0. */
+  - The default value is 1.0.
 
+*/```
 sustain:
-/* This specifies - in beats - how long to "hold" the Event. After X beats, a release message is sent to all the modules created by that Event, which will cause them to go into the release portion of their amplitude envelopes, should they have them.
+```/*
+This specifies - in beats - how long to "hold" the Event. After X beats, a release message is sent to all the modules created by that Event, which will cause them to go into the release portion of their amplitude envelopes, should they have them.
 - The same caveat applies here as legato. Depending on the actual amplitude envelope, and its settings this may not have an audible effect as the modules for that Event may have already faded out.
 - Any floating point number greater than 0 can be used.
-  - Unless set explicitly, it is calculated by dur * stretch * legato (in otherwords, delta * legato). */
+  - Unless set explicitly, it is calculated by dur * stretch * legato (in otherwords, delta * legato).
+
+
 
 
 ## Pitch Parameters:
 
-/*
 
 Determining how a given SoundSource, or other relevant module, reacts to frequency or pitch must technically be done within the SynthDef which defines that module.
 
@@ -267,17 +272,15 @@ Most commonly, freq is the name of the Control argument used to do so in SynthDe
 
 However, this is in the Pattern section because there are a bunch of what may be considered "convenience" parameters that simplify deriving pitch and/or frequency values that need-not be defined in a module's SynthDef at all.
 
-First, the */ freq /* key will be explained:
+First, the freq key will be explained:
 
-*/
-
+*/```
 freq:
-/* This explicitly specifies the frequency for compatible modules. Typically this will be a SoundSource, however a few notable InstanceEffects also use this parameter (/fsh).
+```/*
+This explicitly specifies the frequency for compatible modules. Typically this will be a SoundSource, however a few notable InstanceEffects also use this parameter (/fsh).
 - Any floating point number between 20 and 20,000 can be used.
   - Values outside of this range will be clipped to fit.
-  - The default value is 440. */
-
-/*
+  - The default value is 440.
 
 freq is the highest level of all these other parameters described below. This means (just as in the case of delta, and dur and/or stretch):
 - freq can be derived from lower level parameters.
@@ -296,31 +299,36 @@ This next chunk will cover three parameters:
 - ctranspose
 - harmonic
 
-Together these three are converted into */ freq /* by the following formulation: */ freq = (midinote + ctranspose).midicps * harmonic
+Together these three are converted into freq by the following formulation:  freq = (midinote + ctranspose).midicps * harmonic
 
+*/```
 midinote:
-/* This allows you to use a MIDI note to specificy the frequency for compatible modules.
+```/*
+This allows you to use a MIDI note to specificy the frequency for compatible modules.
 - 60 is middle C.
-  - Using midinote is equivalent to writing: */ freq: 60.midicps /*
+  - Using midinote is equivalent to writing:  freq: 60.midicps
     - midicps is a message which can be passed to numbers to convert from MIDI notes to cycles-per-second.
 - Any floating point number greater than 15 and less than 135 can be used.
   - These are not technically "pitch values"! Just a convenient way to derive frequency, so that's why 60.5 can be used.
-  - The default value is 69.0, eg- 440Hz. */
+  - The default value is 69.0, eg- 440Hz.
 
+*/```
 ctranspose:
-/* "Chromatic transpose", this is an offset which can be considered in pitch. It will be added to midinote to provide the final note value which then gets converted into frequency and sent to compatible modules.
+```/*
+"Chromatic transpose", this is an offset which can be considered in pitch. It will be added to midinote to provide the final note value which then gets converted into frequency and sent to compatible modules.
 - Any positive or negative floating point number can be used.
   - This number will be converted to Hertz and added to the frequency which is sent to compatible modules.
-  - The default value is 0.0, eg- no offset. */
+  - The default value is 0.0, eg- no offset.
 
+*/```
 harmonic:
-/* Scaling factor applied to */ (midinote + ctranspose).midicps /*, this allows for further transposition around a given harmonic ratio.
+```/*
+Scaling factor applied to:  (midinote + ctranspose).midicps, this allows for further transposition around a given harmonic ratio.
 - Any floating point number greater than 0 can be used.
-  - The default value is 1.0. */
+  - The default value is 1.0.
 
-/*
 
-The next level down builds */ midinote /* from the following parameters, all focused around how scales formed from groups of notes:
+The next level down builds midinote from the following parameters, all focused around how scales formed from groups of notes:
 - note: determines pitch as a scale degree
 - gtranspose: gamut transposition; 0.0 is the default
 - stepsPerOctave: how many note units fit within an octave; 12 is the default
@@ -328,23 +336,22 @@ The next level down builds */ midinote /* from the following parameters, all foc
 - root: the root of the scale; default is 0
 (all values provided may be floats)
 
-Together these are converted into */ midinote /* by the following formulation: */ midinote = ((note + gtranspose + root) / stepsPerOctave + octave) * 12.0
-
-/*
+Together these are converted into midinote by the following formulation:  midinote = ((note + gtranspose + root) / stepsPerOctave + octave) * 12.0
 
 If this is obscure when written out like this, then perhaps going straight ahead to the next level down will hopefully make things more clear.
 
-This level is builds */ note /* from the following parameters, all focused on how a note may be distinct from other notes:
+This level is builds note from the following parameters, all focused on how a note may be distinct from other notes:
 - degree: the degree within a scale; 0 is the default
 - mtranspose: modal transposition; 0 is the default
 - scale: mapping of scale degrees into semi-tones, eg- Major is [0, 2, 4, 5, 7, 9, 11], which is also the default
 - stepsPerOctave: same parameter as the above level, but it also plays a role here; default is still 12
 (all values provided may be floats)
 
-Together these are converted into */ note /* by the following formulation: */ note = (degree + mtranspose).degreeToKey(scale, stepsPerOctave)
+Together these are converted into note by the following formulation:  note = (degree + mtranspose).degreeToKey(scale, stepsPerOctave)
 
-```
-// Here are some examples of various combinations (note the use of Value Patterns to derive values for some parameters):
+Here are some examples of various combinations (note the use of Value Patterns to derive values for some parameters):
+
+*/```
 (
 Pdef(0,
 	Pbind(*[
@@ -411,44 +418,39 @@ Pdef(0,
 	])
 ).play
 )
-```
+```/*
 
-/*
+To find out more about Scales and Tuning, see their help files. And look through their respective directories to see which choices are available:
 
-To find out more about Scales and Tuning, see their help files. And look through their respective directories to see which choices are available.
-
-*/
-```
+*/```
 Scale.help
 Tuning.help
 
 Scale.directory
 Tuning.directory
-```
-/*
+```/*
 
 To provide a scale to the scale parameter, you can write Scale.nameOfScale as its value (it's also possible to have random or sequencable changes to this.
 For a scale with a non-standard tuning, you can write Scale.nameOfScale(\nameOfTuning) as the value for scale.
 To see what the degrees and tuning offsets are for a specific choice, you can evaluate that Scale:
 
-*/
-```
+*/```
 Scale.pelog
-```
+```/*
+
+
 
 
 ## Playing Patterns:
 
-### play, stop, and reset Messages
 
-/*
+### play, stop, and reset Messages
 
 Thus far, all the examples have called play on the Pdef while evaluating the contents of the code inside it. But sometimes you might want to evaluate a Pattern without necessarily playing it immediately (or even sometimes at all!)
 
 It's possible to evaluate a Pattern without play-ing it immediately. Likewise, it's also possible to stop it. Or reset it (which is like going back to the beginning of the code without any wait).
 
-*/
-```
+*/```
 (
 Pdef(0, // create Pdef named 0, and define what the code is inside of it:
 	Pbind(*[
@@ -464,27 +466,22 @@ Pdef(0, // create Pdef named 0, and define what the code is inside of it:
 Pdef(0).play // play it
 Pdef(0).stop // stop it
 Pdef(0).reset // reset it
-```
+```/*
 
 
 ### Quantization
-
-/*
 
 You can also quantize when a Pattern starts playing after receiving a play message, when newly evaluated code kicks in, when the pattern stops after receiving a stop message, etc. Quantization is set relative to the TempoClock the Pattern is running on, and it's set in beats, or delta-time.
 
 There are a couple of ways to set the quantization, the most immediate way being as an argument provided with a play message, though there is a major drawback in doing it like this...
 
-*/
-```
+*/```
 Pdef(0).play(quant: 2) // quantize to two beats (depending on how you want to count time)
-```
-/*
+```/*
 
 Setting quantization like this seems to only quantize it start that one time. It's possible to see the Pdef's quantization time by providing the Pdef with a quant message:
 
-*/
-```
+*/```
 Pdef(0).quant // this returns 1 upon evaluation! 1 is the default.
 
 // Set quantization to 2:
@@ -502,18 +499,16 @@ Pdef(0,
 		degree: Pseq([0, 3, -7], inf),
 		legato: Pwrand([1, 0.8, 0.2], [0.8, 0.1, 0.1], inf),
 		stretch: Pdup(16, Prand([0.5, 1, 1.5], inf)),
-		rel: 5 + (Pkey(\stretch) * Prand([1, -1], inf)),
+		rel1: 5 + (Pkey(\stretch) * Prand([1, -1], inf)),
 	])
 )
 )
-```
+```/*
 
 
 ### fadeTime // THIS CURRENTLY DOES NOT WORK!!
 
-/*
-
-When a Pdef is re-evaluated and discovers new code it sends */ release /* messages to all the active Events as a way of smoothly stopping them. It also creates all new Events based on the new code. Both of these things are done at the same time, and this action can be quantized.
+When a Pdef is re-evaluated and discovers new code it sends release messages to all the active Events as a way of smoothly stopping them. It also creates all new Events based on the new code. Both of these things are done at the same time, and this action can be quantized.
 
 Even smoother transitions can be possible: the Pdef can fade out any SoundSources and InstanceEffects in old, still-active Events, and fade in new ones.
 
@@ -521,8 +516,7 @@ Note that for this to work, all modules will need to have an amp Control argumen
 
 How long this takes is set via providing the Pdef a fadeTime message.
 
-*/
-```
+*/```
 Pdef(0).fadeTime // evaluating this code will return what the current fadeTime is set to
 
 Pdef(0).fadeTime = 0.1 // set fadeTime to 0.1
@@ -537,22 +531,20 @@ Pdef(0,
 		degree: Pseq([0, 3, -7], inf),
 		legato: Pwrand([1, 0.8, 0.2], [0.8, 0.1, 0.1], inf),
 		stretch: Pdup(16, Prand([0.5, 1, 1.5], inf)),
-		rel: 2 + (Pkey(\stretch) * Prand([1, -1], inf)),
+		rel1: 2 + (Pkey(\stretch) * Prand([1, -1], inf)),
 	])
 )
 )
-```
+```/*
+
 
 ### Clocking
-
-/*
 
 Patterns default to play on the default TempoClock, which can be called and manipulated by sending messages to TempoClock.default.
 
 By default, it runs at 60 beats-per minute. But note that it is set in beats-per-second!
 
-*/
-```
+*/```
 TempoClock.default.tempo // evaluting this returns a beats-per-second value
 
 TempoClock.default.tempo = 2 // sets to 120 BPM, or 2 BPS
@@ -560,26 +552,21 @@ TempoClock.default.tempo = 2 // sets to 120 BPM, or 2 BPS
 TempoClock.default.tempo = (80 / 60) // formula to work in BPM (desiredBPM / 60 seconds)
 
 TempoClock.default.beatDur // evaluating this returns how long each beat is, in seconds
-```
-/*
+```/*
 
 It's also possible to create new TempoClocks, and set Pdefs to run on them:
 
-*/
-```
+*/```
 ~newClock = TempoClock(100 / 60).permanent_(true) // create a new TempoClock that's set to 100 BPM, and make sure it survives cmd-period
-```
-/*
+```/*
 
 The ".permanent_(true)" part is very important! If TempoClock is created without it, pressing cmd-period (to kill everything currently running on the Server) also removes this Clock. If permanent is set to true, then the Clock will persist.
 
-*/
-```
+*/```
 ~newClock.tempo // returns 1.666 BPS
 
 ~newClock.beatDur // returns 0.6 seconds per beat
-```
-/*
+```/*
 
 In order for a Pdef to become associated with a Clock, it cannot currently be playing.
 
@@ -587,9 +574,7 @@ When a Pdef is stopped there are two ways to specify which Clock to use:
 - An argument provided in the play message (it is the first argument in play)
 - Sending the Pdef itself a clock message, and setting it equal to the Clock
 
-*/
-
-```
+*/```
 // If the Pdef is already stopped, either:
 (
 Pdef(0).clock = ~newClock;
@@ -602,7 +587,7 @@ Pdef(0).play(~newClock)
 ~newClock.tempo = 7
 
 
-// It's also possible to have different Pdefs playing on different Clocks!
+// It's possible to have different Pdefs playing on different Clocks!
 
 ( // Pdefs run on TempoClock.default, by default
 Pdef(1,
@@ -614,12 +599,15 @@ Pdef(1,
 ).play
 )
 TempoClock.default.tempo = 0.75 // change the tempo of the default TempoClock without changing ~newClock's tempo
-```
+```/*
+
+
 
 
 
 
 # SoundSources
+
 
 ## Parameters Common to Most/All SoundSources
 
