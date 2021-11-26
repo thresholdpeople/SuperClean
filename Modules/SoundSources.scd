@@ -55,7 +55,7 @@ Do no add out, amp, & pan conversions to Dictionaries for now. TBD why this brea
 // *adc no longer for vol env- now for slideEnv
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_warp, {
+SynthDef(\clean_warp, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
 	bendTime = \bendTime.ir(0.2).abs, bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 	attack = \attack.ir(0.001).abs, release = \release.ir(1).abs, ampEnvCurve = \ampEnvCurve.ir(1), gate = \gate.tr(1),
@@ -80,24 +80,24 @@ SynthDef(\cleanS_warp, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\add, (
-	instrument: \cleanS_warp,
+	instrument: \clean_warp,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\pan].defaultValue } },
-	// freq: { ~freq ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\freq].defaultValue } },
-	bend: { ~bnd ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\bend].defaultValue } },
-	bendTime: { ~bnt ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\bendTime].defaultValue } },
-	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\bendStartOffset].defaultValue } },
-	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\bendCurve].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\timeScale].defaultValue } },
-	freqUpTime: { ~ada ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\freqUpTime].defaultValue } },
-	freqDownTime: { ~adr ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\freqDownTime].defaultValue } },
-	downTimeOffset: { ~slw ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\downTimeOffset].defaultValue } },
-	freqEnvCurve: { ~adc ?? { SynthDescLib.global.at(\cleanS_warp).controlDict[\freqEnvCurve].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_warp).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_warp).controlDict[\pan].defaultValue } },
+	// freq: { ~freq ?? { SynthDescLib.global.at(\clean_warp).controlDict[\freq].defaultValue } },
+	bend: { ~bnd ?? { SynthDescLib.global.at(\clean_warp).controlDict[\bend].defaultValue } },
+	bendTime: { ~bnt ?? { SynthDescLib.global.at(\clean_warp).controlDict[\bendTime].defaultValue } },
+	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\clean_warp).controlDict[\bendStartOffset].defaultValue } },
+	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\clean_warp).controlDict[\bendCurve].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_warp).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_warp).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_warp).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_warp).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_warp).controlDict[\timeScale].defaultValue } },
+	freqUpTime: { ~ada ?? { SynthDescLib.global.at(\clean_warp).controlDict[\freqUpTime].defaultValue } },
+	freqDownTime: { ~adr ?? { SynthDescLib.global.at(\clean_warp).controlDict[\freqDownTime].defaultValue } },
+	downTimeOffset: { ~slw ?? { SynthDescLib.global.at(\clean_warp).controlDict[\downTimeOffset].defaultValue } },
+	freqEnvCurve: { ~adc ?? { SynthDescLib.global.at(\clean_warp).controlDict[\freqEnvCurve].defaultValue } }
 ));
 );
 
@@ -112,7 +112,7 @@ SynthDef(\cleanS_warp, {
 // // (NEW: uni, gate, tsc*, am1-4, er1-4, bnd, bnt, bno, bnc)
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_fmx, {
+SynthDef(\clean_fmx, {
 	var out = \out.ir, amp = [\amp1.kr(1), \amp2.kr(1), \amp3.kr(1), \amp4.kr(1), \amp.kr(0.3)], pan = \pan.kr, freq = \freq.kr(440).abs,
 	bend = \bend.kr.clip(-1, 1), bendTime = \bendTime.ir(0.2).abs, bendStartOffset = \bendStartOffset.ir.abs,
 	bendCurve = \bendCurve.ir, attack = [\attack1.ir.abs, \attack2.ir.abs, \attack3.ir.abs, \attack4.ir.abs], gate = \gate.tr(1),
@@ -148,43 +148,43 @@ SynthDef(\cleanS_fmx, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\fmx, (
-	instrument: \cleanS_fmx,
+	instrument: \clean_fmx,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\pan].defaultValue } },
-	// freq: { ~freq ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\freq].defaultValue } },
-	bend: { ~bnd ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\bend].defaultValue } },
-	bendTime: { ~bnt ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\bendTime].defaultValue } },
-	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\bendStartOffset].defaultValue } },
-	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\bendCurve].defaultValue } },
-	amp1: { ~am1 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\amp1].defaultValue } },
-	amp2: { ~am2 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\amp2].defaultValue } },
-	amp3: { ~am3 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\amp3].defaultValue } },
-	amp4: { ~am4 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\amp4].defaultValue } },
-	attack1: { ~en1 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\attack1].defaultValue } },
-	attack2: { ~en2 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\attack2].defaultValue } },
-	attack3: { ~en3 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\attack3].defaultValue } },
-	attack4: { ~en4 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\attack4].defaultValue } },
-	release1: { ~er1 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\release1].defaultValue } },
-	release2: { ~er2 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\release2].defaultValue } },
-	release3: { ~er3 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\release3].defaultValue } },
-	release4: { ~er4 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\release4].defaultValue } },
-	ampEnvCurve1: { ~cu1 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\ampEnvCurve1].defaultValue } },
-	ampEnvCurve2: { ~cu2 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\ampEnvCurve2].defaultValue } },
-	ampEnvCurve3: { ~cu3 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\ampEnvCurve3].defaultValue } },
-	ampEnvCurve4: { ~cu4 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\ampEnvCurve4].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\timeScale].defaultValue } },
-	detune: { ~det ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\detune].defaultValue } },
-	unisonBend: { ~uni ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\unisonBend].defaultValue } },
-	modIndex1: { ~mi1 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\modIndex1].defaultValue } },
-	modIndex2: { ~mi2 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\modIndex2].defaultValue } },
-	modIndex3: { ~mi3 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\modIndex3].defaultValue } },
-	modIndex4: { ~mi4 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\modIndex4].defaultValue } },
-	harmonicityRatio1: { ~hr1 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\harmonicityRatio1].defaultValue } },
-	harmonicityRatio2: { ~hr2 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\harmonicityRatio2].defaultValue } },
-	harmonicityRatio3: { ~hr3 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\harmonicityRatio3].defaultValue } },
-	harmonicityRatio4: { ~hr4 ?? { SynthDescLib.global.at(\cleanS_fmx).controlDict[\harmonicityRatio4].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\pan].defaultValue } },
+	// freq: { ~freq ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\freq].defaultValue } },
+	bend: { ~bnd ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\bend].defaultValue } },
+	bendTime: { ~bnt ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\bendTime].defaultValue } },
+	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\bendStartOffset].defaultValue } },
+	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\bendCurve].defaultValue } },
+	amp1: { ~am1 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\amp1].defaultValue } },
+	amp2: { ~am2 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\amp2].defaultValue } },
+	amp3: { ~am3 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\amp3].defaultValue } },
+	amp4: { ~am4 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\amp4].defaultValue } },
+	attack1: { ~en1 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\attack1].defaultValue } },
+	attack2: { ~en2 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\attack2].defaultValue } },
+	attack3: { ~en3 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\attack3].defaultValue } },
+	attack4: { ~en4 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\attack4].defaultValue } },
+	release1: { ~er1 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\release1].defaultValue } },
+	release2: { ~er2 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\release2].defaultValue } },
+	release3: { ~er3 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\release3].defaultValue } },
+	release4: { ~er4 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\release4].defaultValue } },
+	ampEnvCurve1: { ~cu1 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\ampEnvCurve1].defaultValue } },
+	ampEnvCurve2: { ~cu2 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\ampEnvCurve2].defaultValue } },
+	ampEnvCurve3: { ~cu3 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\ampEnvCurve3].defaultValue } },
+	ampEnvCurve4: { ~cu4 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\ampEnvCurve4].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\timeScale].defaultValue } },
+	detune: { ~det ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\detune].defaultValue } },
+	unisonBend: { ~uni ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\unisonBend].defaultValue } },
+	modIndex1: { ~mi1 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\modIndex1].defaultValue } },
+	modIndex2: { ~mi2 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\modIndex2].defaultValue } },
+	modIndex3: { ~mi3 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\modIndex3].defaultValue } },
+	modIndex4: { ~mi4 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\modIndex4].defaultValue } },
+	harmonicityRatio1: { ~hr1 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\harmonicityRatio1].defaultValue } },
+	harmonicityRatio2: { ~hr2 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\harmonicityRatio2].defaultValue } },
+	harmonicityRatio3: { ~hr3 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\harmonicityRatio3].defaultValue } },
+	harmonicityRatio4: { ~hr4 ?? { SynthDescLib.global.at(\clean_fmx).controlDict[\harmonicityRatio4].defaultValue } }
 ));
 );
 
@@ -198,7 +198,7 @@ SynthDef(\cleanS_fmx, {
 // // (NEW: gate (and tsc on ampEnv))
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_ixa, {
+SynthDef(\clean_ixa, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
 	bendTime = \bendTime.ir(0.2).abs, bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 	attack = \attack.ir(0.001).abs, release = \release.ir(1).abs, ampEnvCurve = \ampEnvCurve.ir,
@@ -228,26 +228,26 @@ SynthDef(\cleanS_ixa, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\ixa, (
-	instrument: \cleanS_ixa,
+	instrument: \clean_ixa,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\pan].defaultValue } },
-	// freq: { ~freq ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\freq].defaultValue } },
-	bend: { ~bnd ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\bend].defaultValue } },
-	bendTime: { ~bnt ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\bendTime].defaultValue } },
-	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\bendStartOffset].defaultValue } },
-	bendCurve: { ~bnc ?? {SynthDescLib.global.at(\cleanS_ixa).controlDict[\bendCurve].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\timeScale].defaultValue } },
-	slopeBelowSpeed: { ~bes ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\slopeBelowSpeed].defaultValue } },
-	slopeBelowRange: { ~ber ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\slopeBelowRange].defaultValue } },
-	slopeAboveSpeed: { ~abs ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\slopeAboveSpeed].defaultValue } },
-	slopeAboveRange: { ~abr ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\slopeAboveRange].defaultValue } },
-	thresholdSpeed: { ~ths ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\thresholdSpeed].defaultValue } },
-	thresholdRange: { ~thr ?? { SynthDescLib.global.at(\cleanS_ixa).controlDict[\thresholdRange].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\pan].defaultValue } },
+	// freq: { ~freq ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\freq].defaultValue } },
+	bend: { ~bnd ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\bend].defaultValue } },
+	bendTime: { ~bnt ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\bendTime].defaultValue } },
+	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\bendStartOffset].defaultValue } },
+	bendCurve: { ~bnc ?? {SynthDescLib.global.at(\clean_ixa).controlDict[\bendCurve].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\timeScale].defaultValue } },
+	slopeBelowSpeed: { ~bes ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\slopeBelowSpeed].defaultValue } },
+	slopeBelowRange: { ~ber ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\slopeBelowRange].defaultValue } },
+	slopeAboveSpeed: { ~abs ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\slopeAboveSpeed].defaultValue } },
+	slopeAboveRange: { ~abr ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\slopeAboveRange].defaultValue } },
+	thresholdSpeed: { ~ths ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\thresholdSpeed].defaultValue } },
+	thresholdRange: { ~thr ?? { SynthDescLib.global.at(\clean_ixa).controlDict[\thresholdRange].defaultValue } }
 ));
 );
 
@@ -261,7 +261,7 @@ SynthDef(\cleanS_ixa, {
 // // (NEW: gate (and tsc on ampEnv))
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_sine, {
+SynthDef(\clean_sine, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440), bend = \bend.kr.clip(-1, 1),
 	bendTime = \bendTime.ir(0.2).abs, bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 	attack = \attack.ir(0.001).abs, release = \release.ir(1).abs, ampEnvCurve = \ampEnvCurve.ir(-8), gate = \gate.tr(1),
@@ -283,21 +283,21 @@ SynthDef(\cleanS_sine, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\sin, (
-	instrument: \cleanS_sine,
+	instrument: \clean_sine,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\pan].defaultValue } },
-	// freq: { ~freq ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\freq].defaultValue } },
-	bend: { ~bnd ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\bend].defaultValue } },
-	bendTime: { ~bnt ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\bendTime].defaultValue } },
-	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\bendStartOffset].defaultValue } },
-	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\bendCurve].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\timeScale].defaultValue } },
-	initPhase: { ~iph ?? { SynthDescLib.global.at(\cleanS_sine).controlDict[\initPhase].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_sine).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_sine).controlDict[\pan].defaultValue } },
+	// freq: { ~freq ?? { SynthDescLib.global.at(\clean_sine).controlDict[\freq].defaultValue } },
+	bend: { ~bnd ?? { SynthDescLib.global.at(\clean_sine).controlDict[\bend].defaultValue } },
+	bendTime: { ~bnt ?? { SynthDescLib.global.at(\clean_sine).controlDict[\bendTime].defaultValue } },
+	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\clean_sine).controlDict[\bendStartOffset].defaultValue } },
+	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\clean_sine).controlDict[\bendCurve].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_sine).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_sine).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_sine).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_sine).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_sine).controlDict[\timeScale].defaultValue } },
+	initPhase: { ~iph ?? { SynthDescLib.global.at(\clean_sine).controlDict[\initPhase].defaultValue } }
 ));
 );
 
@@ -312,7 +312,7 @@ SynthDef(\cleanS_sine, {
 // // (NEW: gate (and tsc on ampEnv))
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_sawTri, {
+SynthDef(\clean_sawTri, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
 	bendTime = \bendTime.ir(0.2).abs, bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 	attack = \attack.ir(0.001).abs, release = \release.ir(1).abs, ampEnvCurve = \ampEnvCurve.ir(-8), gate = \gate.tr(1),
@@ -334,22 +334,22 @@ SynthDef(\cleanS_sawTri, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\saw, (
-	instrument: \cleanS_sawTri,
+	instrument: \clean_sawTri,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\pan].defaultValue } },
-	// freq: { ~freq ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\freq].defaultValue } },
-	bend: { ~bnd ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\bend].defaultValue } },
-	bendTime: { ~bnt ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\bendTime].defaultValue } },
-	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\bendStartOffset].defaultValue } },
-	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\bendCurve].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\timeScale].defaultValue } },
-	initPhase: { ~iph ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\initPhase].defaultValue } },
-	width: { ~wid ?? { SynthDescLib.global.at(\cleanS_sawTri).controlDict[\width].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\pan].defaultValue } },
+	// freq: { ~freq ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\freq].defaultValue } },
+	bend: { ~bnd ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\bend].defaultValue } },
+	bendTime: { ~bnt ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\bendTime].defaultValue } },
+	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\bendStartOffset].defaultValue } },
+	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\bendCurve].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\timeScale].defaultValue } },
+	initPhase: { ~iph ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\initPhase].defaultValue } },
+	width: { ~wid ?? { SynthDescLib.global.at(\clean_sawTri).controlDict[\width].defaultValue } }
 ));
 );
 
@@ -365,7 +365,7 @@ SynthDef(\cleanS_sawTri, {
 // *iph not implemented with Pulse
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_pulse, {
+SynthDef(\clean_pulse, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
 	bendTime = \bendTime.ir(0.2), bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 	attack = \attack.ir(0.001).abs, release = \release.ir(1).abs, ampEnvCurve = \ampEnvCurve.ir(-8), gate = \gate.tr(1),
@@ -388,22 +388,22 @@ SynthDef(\cleanS_pulse, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\sqr, (
-	instrument: \cleanS_pulse,
+	instrument: \clean_pulse,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\pan].defaultValue } },
-	// freq: { ~freq ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\freq].defaultValue } },
-	bend: { ~bnd ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\bend].defaultValue } },
-	bendTime: { ~bnt ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\bendTime].defaultValue } },
-	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\bendStartOffset].defaultValue } },
-	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\bendCurve].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\timeScale].defaultValue } },
-	initPhase: { ~iph ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\initPhase].defaultValue } },
-	width: { ~wid ?? { SynthDescLib.global.at(\cleanS_pulse).controlDict[\width].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\pan].defaultValue } },
+	// freq: { ~freq ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\freq].defaultValue } },
+	bend: { ~bnd ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\bend].defaultValue } },
+	bendTime: { ~bnt ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\bendTime].defaultValue } },
+	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\bendStartOffset].defaultValue } },
+	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\bendCurve].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\timeScale].defaultValue } },
+	initPhase: { ~iph ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\initPhase].defaultValue } },
+	width: { ~wid ?? { SynthDescLib.global.at(\clean_pulse).controlDict[\width].defaultValue } }
 ));
 );
 
@@ -418,7 +418,7 @@ SynthDef(\cleanS_pulse, {
 // // (NEW: amp, atk, rel, crv, gate)
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_karplusStrong, {
+SynthDef(\clean_karplusStrong, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
 	bendTime = \bendTime.ir(0.2).abs, bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 	attack = \attack.ir(0.002).abs, release = \release.ir(0.5).abs, ampEnvCurve = \ampEnvCurve.ir(-8), gate = \gate.tr(1),
@@ -448,21 +448,21 @@ SynthDef(\cleanS_karplusStrong, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\kps, (
-	instrument: \cleanS_karplusStrong,
+	instrument: \clean_karplusStrong,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\pan].defaultValue } },
-	// freq: { ~freq ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\freq].defaultValue } },
-	bend: { ~bnd ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\bend].defaultValue } },
-	bendTime: { ~bnt ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\bendTime].defaultValue } },
-	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\bendStartOffset].defaultValue } },
-	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\bendCurve].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\timeScale].defaultValue } },
-	detune: { ~det ?? { SynthDescLib.global.at(\cleanS_karplusStrong).controlDict[\detune].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\pan].defaultValue } },
+	// freq: { ~freq ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\freq].defaultValue } },
+	bend: { ~bnd ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\bend].defaultValue } },
+	bendTime: { ~bnt ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\bendTime].defaultValue } },
+	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\bendStartOffset].defaultValue } },
+	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\bendCurve].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\timeScale].defaultValue } },
+	detune: { ~det ?? { SynthDescLib.global.at(\clean_karplusStrong).controlDict[\detune].defaultValue } }
 ));
 );
 
@@ -477,7 +477,7 @@ SynthDef(\cleanS_karplusStrong, {
 // // (NEW: fco, amp, atk, rel, crv, gate)
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_drum, {
+SynthDef(\clean_drum, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, attack = \attack.ir(0.01).abs, release = \release.ir(1).abs,
 	ampEnvCurve = \ampEnvCurve.ir(-3), gate = \gate.tr(1), timeScale = \timeScale.kr(1).abs;
 	var tune = \tune.kr.abs, feedback = \feedback.kr.abs, sweep = \sweep.kr(1).abs, cutoff = \cutoff.kr(9000).abs;
@@ -499,19 +499,19 @@ SynthDef(\cleanS_drum, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\drm, (
-	instrument: \cleanS_drum,
+	instrument: \clean_drum,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\pan].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\timeScale].defaultValue } },
-	tune: { ~tun ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\tune].defaultValue } },
-	feedback: { ~fed ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\feedback].defaultValue } },
-	sweep: { ~pew ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\sweep].defaultValue } },
-	cutoff: { ~fco ?? { SynthDescLib.global.at(\cleanS_drum).controlDict[\cutoff].defaultValue } },
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_drum).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_drum).controlDict[\pan].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_drum).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_drum).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_drum).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_drum).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_drum).controlDict[\timeScale].defaultValue } },
+	tune: { ~tun ?? { SynthDescLib.global.at(\clean_drum).controlDict[\tune].defaultValue } },
+	feedback: { ~fed ?? { SynthDescLib.global.at(\clean_drum).controlDict[\feedback].defaultValue } },
+	sweep: { ~pew ?? { SynthDescLib.global.at(\clean_drum).controlDict[\sweep].defaultValue } },
+	cutoff: { ~fco ?? { SynthDescLib.global.at(\clean_drum).controlDict[\cutoff].defaultValue } },
 ));
 );
 
@@ -526,7 +526,7 @@ SynthDef(\cleanS_drum, {
 // // (NEW: cfr, bnt, bno, bnc, amp, atk, rel, crv, gate)
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_hat, {
+SynthDef(\clean_hat, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, bend = \bend.kr.clip(-1, 1), bendTime = \bendTime.ir(0.2).abs,
 	bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir, attack = \attack.ir(0.01).abs,
 	release = \release.ir(0.3).abs, ampEnvCurve = \ampEnvCurve.ir(-3), gate = \gate.tr(1), timeScale = \timeScale.kr(1).abs;
@@ -547,21 +547,21 @@ SynthDef(\cleanS_hat, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\hat, (
-	instrument: \cleanS_hat,
+	instrument: \clean_hat,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\pan].defaultValue } },
-	bend: { ~bnd ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\bend].defaultValue } },
-	bendTime: { ~bnt ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\bendTime].defaultValue } },
-	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\bendStartOffset].defaultValue } },
-	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\bendCurve].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\timeScale].defaultValue } },
-	tune: { ~tun ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\tune].defaultValue } },
-	centerFreq: { ~cfr ?? { SynthDescLib.global.at(\cleanS_hat).controlDict[\centerFreq].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_hat).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_hat).controlDict[\pan].defaultValue } },
+	bend: { ~bnd ?? { SynthDescLib.global.at(\clean_hat).controlDict[\bend].defaultValue } },
+	bendTime: { ~bnt ?? { SynthDescLib.global.at(\clean_hat).controlDict[\bendTime].defaultValue } },
+	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\clean_hat).controlDict[\bendStartOffset].defaultValue } },
+	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\clean_hat).controlDict[\bendCurve].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_hat).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_hat).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_hat).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_hat).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_hat).controlDict[\timeScale].defaultValue } },
+	tune: { ~tun ?? { SynthDescLib.global.at(\clean_hat).controlDict[\tune].defaultValue } },
+	centerFreq: { ~cfr ?? { SynthDescLib.global.at(\clean_hat).controlDict[\centerFreq].defaultValue } }
 ));
 );
 
@@ -575,7 +575,7 @@ SynthDef(\cleanS_hat, {
 // amp | pan | atk | rel | crv | gate | tsc
 // // (NEW: )
 (
-SynthDef(\cleanS_clap, {
+SynthDef(\clean_clap, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, attack = \attack.ir(0.05).abs, release = \release.ir(0.7).abs,
 	ampEnvCurve = \ampEnvCurve.ir(-7), gate = \gate.tr(1), timeScale = \timeScale.kr(1).abs;
 	var cutoff = \cutoff.kr(1611).abs, resonance = \resonance.kr(0.5).clip(0.01, 1), thumpAmp = \thumpAmp.kr(0.7).abs,
@@ -606,23 +606,23 @@ SynthDef(\cleanS_clap, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\clp, (
-	instrument: \cleanS_clap,
+	instrument: \clean_clap,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\pan].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\timeScale].defaultValue } },
-	sharpness: { ~srp ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\sharpness].defaultValue } },
-	resonance: { ~srq ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\resonance].defaultValue } },
-	damping: { ~dmp ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\damping].defaultValue } },
-	bendAmount: { ~bdy ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\bendAmount].defaultValue } },
-	bendTime: { ~bdt ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\bendTime].defaultValue } },
-	thumpAmp: { ~tha ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\thumpAmp].defaultValue } },
-	thumpOffset: { ~tho ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\thumpOffset].defaultValue } },
-	cutoff: { ~fco ?? { SynthDescLib.global.at(\cleanS_clap).controlDict[\cutoff].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_clap).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_clap).controlDict[\pan].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_clap).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_clap).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_clap).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_clap).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_clap).controlDict[\timeScale].defaultValue } },
+	sharpness: { ~srp ?? { SynthDescLib.global.at(\clean_clap).controlDict[\sharpness].defaultValue } },
+	resonance: { ~srq ?? { SynthDescLib.global.at(\clean_clap).controlDict[\resonance].defaultValue } },
+	damping: { ~dmp ?? { SynthDescLib.global.at(\clean_clap).controlDict[\damping].defaultValue } },
+	bendAmount: { ~bdy ?? { SynthDescLib.global.at(\clean_clap).controlDict[\bendAmount].defaultValue } },
+	bendTime: { ~bdt ?? { SynthDescLib.global.at(\clean_clap).controlDict[\bendTime].defaultValue } },
+	thumpAmp: { ~tha ?? { SynthDescLib.global.at(\clean_clap).controlDict[\thumpAmp].defaultValue } },
+	thumpOffset: { ~tho ?? { SynthDescLib.global.at(\clean_clap).controlDict[\thumpOffset].defaultValue } },
+	cutoff: { ~fco ?? { SynthDescLib.global.at(\clean_clap).controlDict[\cutoff].defaultValue } }
 ));
 );
 
@@ -637,7 +637,7 @@ SynthDef(\cleanS_clap, {
 // // (NEW: ing, tsc, bnd, bnt, bno, bnc, gate)
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_filterPing, {
+SynthDef(\clean_filterPing, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440), bend = \bend.kr.clip(-1, 1),
 	bendTime = \bendTime.ir(0.2).abs,bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 	attack = \attack.ir(0.001).abs, release = \release.ir(1).abs, ampEnvCurve = \ampEnvCurve.ir(-8), gate = \gate.tr(1),
@@ -661,25 +661,25 @@ SynthDef(\cleanS_filterPing, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\dfd, (
-	instrument: \cleanS_filterPing,
+	instrument: \clean_filterPing,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\pan].defaultValue } },
-	// freq: { ~freq ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\freq].defaultValue } },
-	bend: { ~bnd ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\bend].defaultValue } },
-	bendTime: { ~bnt ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\bendTime].defaultValue } },
-	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\bendStartOffset].defaultValue } },
-	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\bendCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\timeScale].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\ampEnvCurve].defaultValue } },
-	resonance: { ~res ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\resonance].defaultValue } },
-	density: { ~den ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\density].defaultValue } },
-	filterType: { ~typ ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\filterType].defaultValue } },
-	noiseAmount: { ~nsl ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\noiseAmount].defaultValue } },
-	gain: { ~ing ?? { SynthDescLib.global.at(\cleanS_filterPing).controlDict[\gain].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\pan].defaultValue } },
+	// freq: { ~freq ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\freq].defaultValue } },
+	bend: { ~bnd ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\bend].defaultValue } },
+	bendTime: { ~bnt ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\bendTime].defaultValue } },
+	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\bendStartOffset].defaultValue } },
+	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\bendCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\timeScale].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\ampEnvCurve].defaultValue } },
+	resonance: { ~res ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\resonance].defaultValue } },
+	density: { ~den ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\density].defaultValue } },
+	filterType: { ~typ ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\filterType].defaultValue } },
+	noiseAmount: { ~nsl ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\noiseAmount].defaultValue } },
+	gain: { ~ing ?? { SynthDescLib.global.at(\clean_filterPing).controlDict[\gain].defaultValue } }
 ));
 );
 
@@ -694,7 +694,7 @@ SynthDef(\cleanS_filterPing, {
 // // (NEW: bvl, bpr, ind, fls, imp, inh, (gate on env, no BWG), tsc, bnd, bnt, bno, bnc)
 // *tsc formerly named sustain
 (
-SynthDef(\cleanS_waveguide, {
+SynthDef(\clean_waveguide, {
 	var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
 	bendTime = \bendTime.ir(0.2).abs, bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 	attack = \attack.ir(0.001).abs, release = \release.ir(1).abs, ampEnvCurve = \ampEnvCurve.ir(-8), gate = \gate.tr(1),
@@ -723,28 +723,28 @@ SynthDef(\cleanS_waveguide, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\bow, (
-	instrument: \cleanS_waveguide,
+	instrument: \clean_waveguide,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\pan].defaultValue } },
-	// freq: { ~freq ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\freq].defaultValue } },
-	bend: { ~bnd ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\bend].defaultValue } },
-	bendTime: { ~bnt ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\bendTime].defaultValue } },
-	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\bendStartOffset].defaultValue } },
-	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\bendCurve].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\timeScale].defaultValue } },
-	bowForce: { ~frc ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\bowForce].defaultValue } },
-	bowPosition: { ~pos ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\bowPosition].defaultValue } },
-	bowVelocity: { ~bvl ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\bowVelocity].defaultValue } },
-	bowRelease: { ~bpr ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\bowRelease].defaultValue } },
-	inverseDecay: { ~ind ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\inverseDecay].defaultValue } },
-	freqLoss: { ~fls ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\freqLoss].defaultValue } },
-	impedance: { ~imp ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\impedance].defaultValue } },
-	inharmonicity: { ~inh ?? { SynthDescLib.global.at(\cleanS_waveguide).controlDict[\inharmonicity].defaultValue } }
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\pan].defaultValue } },
+	// freq: { ~freq ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\freq].defaultValue } },
+	bend: { ~bnd ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\bend].defaultValue } },
+	bendTime: { ~bnt ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\bendTime].defaultValue } },
+	bendStartOffset: { ~bno ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\bendStartOffset].defaultValue } },
+	bendCurve: { ~bnc ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\bendCurve].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\timeScale].defaultValue } },
+	bowForce: { ~frc ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\bowForce].defaultValue } },
+	bowPosition: { ~pos ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\bowPosition].defaultValue } },
+	bowVelocity: { ~bvl ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\bowVelocity].defaultValue } },
+	bowRelease: { ~bpr ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\bowRelease].defaultValue } },
+	inverseDecay: { ~ind ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\inverseDecay].defaultValue } },
+	freqLoss: { ~fls ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\freqLoss].defaultValue } },
+	impedance: { ~imp ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\impedance].defaultValue } },
+	inharmonicity: { ~inh ?? { SynthDescLib.global.at(\clean_waveguide).controlDict[\inharmonicity].defaultValue } }
 ));
 );
 
@@ -780,7 +780,7 @@ SynthDef(\cleanS_waveguide, {
 	};
 
 	channelGroups.do{ |numCh|
-		var fullName = (\cleanR_externalIn ++ (numCh + 1)).asSymbol;
+		var fullName = (\clean_externalIn ++ (numCh + 1)).asSymbol;
 		var cleanName = (\ex ++ (numCh + 1)).asSymbol;
 		SynthDef(fullName, variableChannelExternalInputs.(numCh)).add;
 
@@ -841,7 +841,7 @@ SynthDef(\cleanS_waveguide, {
 	};
 
 	channelGroups.do{ |numCh|
-		var fullName = (\cleanR_extInPitchShift ++ (numCh + 1)).asSymbol;
+		var fullName = (\clean_extInPitchShift ++ (numCh + 1)).asSymbol;
 		var cleanName = (\es ++ (numCh + 1)).asSymbol;
 		SynthDef(fullName, variableChannelExternalInputs.(numCh)).add;
 
@@ -884,7 +884,7 @@ SynthDef(\cleanS_waveguide, {
 // *formerly named \from
 // *tsc formerly named sustain
 (
-SynthDef(\cleanR_busReceiver, {
+SynthDef(\clean_busReceiver, {
 	var out = \out.ir, input = \input.ir, amp = \amp.kr(0.3), pan = \pan.kr,  attack = \attack.ir(0.001).abs,
 	release = \release.ir(1).abs, ampEnvCurve = \ampEnvCurve.ir(-3), gate = \gate.tr(1), timeScale = \timeScale.kr(1).abs;
 
@@ -900,16 +900,16 @@ SynthDef(\cleanR_busReceiver, {
 }).add;
 
 ~clean.soundLibrary.addSynth(\rcv, (
-	instrument: \cleanR_busReceiver,
+	instrument: \clean_busReceiver,
 	// out: { ~out },
-	// amp: { ~amp ?? { SynthDescLib.global.at(\cleanR_busReceiver).controlDict[\amp].defaultValue } },
-	// pan: { ~pan ?? { SynthDescLib.global.at(\cleanR_busReceiver).controlDict[\pan].defaultValue } },
-	// freq: { ~freq ?? { SynthDescLib.global.at(\cleanR_busReceiver).controlDict[\freq].defaultValue } },
-	attack: { ~atk ?? { SynthDescLib.global.at(\cleanR_busReceiver).controlDict[\attack].defaultValue } },
-	release: { ~rel ?? { SynthDescLib.global.at(\cleanR_busReceiver).controlDict[\release].defaultValue } },
-	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\cleanR_busReceiver).controlDict[\ampEnvCurve].defaultValue } },
-	gate: { ~gate ?? { SynthDescLib.global.at(\cleanR_busReceiver).controlDict[\gate].defaultValue } },
-	timeScale: { ~tsc ?? { SynthDescLib.global.at(\cleanR_busReceiver).controlDict[\timeScale].defaultValue } },
+	// amp: { ~amp ?? { SynthDescLib.global.at(\clean_busReceiver).controlDict[\amp].defaultValue } },
+	// pan: { ~pan ?? { SynthDescLib.global.at(\clean_busReceiver).controlDict[\pan].defaultValue } },
+	// freq: { ~freq ?? { SynthDescLib.global.at(\clean_busReceiver).controlDict[\freq].defaultValue } },
+	attack: { ~atk ?? { SynthDescLib.global.at(\clean_busReceiver).controlDict[\attack].defaultValue } },
+	release: { ~rel ?? { SynthDescLib.global.at(\clean_busReceiver).controlDict[\release].defaultValue } },
+	ampEnvCurve: { ~crv ?? { SynthDescLib.global.at(\clean_busReceiver).controlDict[\ampEnvCurve].defaultValue } },
+	gate: { ~gate ?? { SynthDescLib.global.at(\clean_busReceiver).controlDict[\gate].defaultValue } },
+	timeScale: { ~tsc ?? { SynthDescLib.global.at(\clean_busReceiver).controlDict[\timeScale].defaultValue } },
 	input: { ~clean.audioRoutingBusses.wrapAt(~inb ?? { 0 }).index }
 ));
 );
