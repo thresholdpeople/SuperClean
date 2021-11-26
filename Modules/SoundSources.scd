@@ -77,7 +77,7 @@ SynthDef(\cleanS_warp, {
 	signal = signal * amp * (ampEnv[0].max(0.2) * 0.5) * ampEnv[1] * AmpComp.kr(freq, 40, 0.3); // ampEnv[0]??
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\add, (
 	instrument: \cleanS_warp,
@@ -145,7 +145,7 @@ SynthDef(\cleanS_fmx, {
 	signal = LeakDC.ar(signal);
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\fmx, (
 	instrument: \cleanS_fmx,
@@ -225,7 +225,7 @@ SynthDef(\cleanS_ixa, {
 	signal = signal * ampEnv;
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\ixa, (
 	instrument: \cleanS_ixa,
@@ -280,7 +280,7 @@ SynthDef(\cleanS_sine, {
 	signal = signal * ampEnv;
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\sin, (
 	instrument: \cleanS_sine,
@@ -331,7 +331,7 @@ SynthDef(\cleanS_sawTri, {
 	signal = signal * ampEnv;
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\saw, (
 	instrument: \cleanS_sawTri,
@@ -385,7 +385,7 @@ SynthDef(\cleanS_pulse, {
 	signal = signal * ampEnv;
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\sqr, (
 	instrument: \cleanS_pulse,
@@ -445,7 +445,7 @@ SynthDef(\cleanS_karplusStrong, {
 	signal = signal * ampEnv;
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\kps, (
 	instrument: \cleanS_karplusStrong,
@@ -496,7 +496,7 @@ SynthDef(\cleanS_drum, {
 	signal = signal * ampEnv;
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\drm, (
 	instrument: \cleanS_drum,
@@ -544,7 +544,7 @@ SynthDef(\cleanS_hat, {
 	signal = signal * ampEnv;
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\hat, (
 	instrument: \cleanS_hat,
@@ -603,7 +603,7 @@ SynthDef(\cleanS_clap, {
 	signal = signal * clapEnv * ampEnv * (amp * 2);
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	ReplaceOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\clp, (
 	instrument: \cleanS_clap,
@@ -658,7 +658,7 @@ SynthDef(\cleanS_filterPing, {
 	signal = signal * ampEnv;
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan); // stereo image is perserved, but still allows panning
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\dfd, (
 	instrument: \cleanS_filterPing,
@@ -720,7 +720,7 @@ SynthDef(\cleanS_waveguide, {
 	signal = signal * ampEnv;
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\bow, (
 	instrument: \cleanS_waveguide,
@@ -782,7 +782,7 @@ SynthDef(\cleanS_waveguide, {
 	channelGroups.do{ |numCh|
 		var fullName = (\cleanR_externalIn ++ (numCh + 1)).asSymbol;
 		var cleanName = (\ex ++ (numCh + 1)).asSymbol;
-		SynthDef(fullName, variableChannelExternalInputs.(numCh)).store;
+		SynthDef(fullName, variableChannelExternalInputs.(numCh)).add;
 
 		~clean.soundLibrary.addSynth(cleanName, (
 			instrument: fullName,
@@ -843,7 +843,7 @@ SynthDef(\cleanS_waveguide, {
 	channelGroups.do{ |numCh|
 		var fullName = (\cleanR_extInPitchShift ++ (numCh + 1)).asSymbol;
 		var cleanName = (\es ++ (numCh + 1)).asSymbol;
-		SynthDef(fullName, variableChannelExternalInputs.(numCh)).store;
+		SynthDef(fullName, variableChannelExternalInputs.(numCh)).add;
 
 		~clean.soundLibrary.addSynth(cleanName, (
 			instrument: fullName,
@@ -897,7 +897,7 @@ SynthDef(\cleanR_busReceiver, {
 	signal = signal * ampEnv;
 	signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 	OffsetOut.ar(out, signal)
-}).store;
+}).add;
 
 ~clean.soundLibrary.addSynth(\rcv, (
 	instrument: \cleanR_busReceiver,
