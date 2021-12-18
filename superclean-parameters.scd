@@ -87,7 +87,7 @@ Pdef(\name,
 ```
 /*
 
-As a brief overview, \name is a Symbol, and it can be any unique Symbol, eg- \bass, \kicks, \drones, or even an Integer.  It can also be defined in single-quotes: 'name', or even double-quotes: "name".
+As a brief overview, \name is a Symbol, and it can be any unique Symbol, eg: \bass, \kicks, \drones, or even an Integer.  It can also be defined in single-quotes: 'name', or even double-quotes: "name".
 
 .play is a "message" which is sent to the Pdef (the Pdef's contents are between two parenthesis, and .play is appended to them).  This message tells the Pdef to play!
 - It will continue to play until either:
@@ -170,17 +170,18 @@ Set this to \cln.  \cln means SuperClean.
 ```
 snd:
 ```
-/*  Provide it the name of the SoundSource you will use.  The name should be formatted as a Symbol (start with either a backslash (\) or be inside of single quotes ('sourceName'). This can even be a pattern which allows the SoundSource to change from one event to the next!
+/*  Provide it the name of the SoundSource you will use.  The name should be formatted as a Symbol (first character is a backslash - \sourceName - or inside of single quotes - 'sourceName'.
 - In the above example \sin is SuperClean shorthand for \clean_sine, which is the name of a specific SynthDef.
   - There are many types of SoundSources already built in to SuperClean.  Many are synthesizers, and others are sample players, and a few are processors which allow you to receive audio input from either other running processes in SuperCollider or from your audio interface.
+- This can even be a pattern which allows the SoundSource to change from one event to the next! Eg: Pwrand([\sin, \saw], inf)
 
 
-Technically, the bare minimum amount of information a SuperClean Pattern will require is type and snd.  It will provide default values for any other parameter of consequence. A few examples:
+Technically, the bare minimum amount of information a SuperClean Pattern will require is type and snd.  It will provide default values for any other parameter of consequence.  A few examples:
 
 */
 ```
 (
-Pdef(0, // name of the Pdef, note that it is set to an Integer. You will find many SuperClean examples which use this naming convention
+Pdef(0, // name of the Pdef, note that it is set to an Integer.  You will find many SuperClean examples which use this naming convention
 	Pbind(*[
 		type: \cln, // sets this Pbind to be a SuperClean Pattern
 		snd: \saw // creates (plays) a triangle-saw variable wave synthesizer with default frequency, envelope, and amplitude values for each Event
@@ -194,12 +195,44 @@ Pdef(0, // name of the Pdef, note that it is set to an Integer. You will find ma
 Pdef(0, // note that evaluating this block of code effectively overwrites the previous one, as they share the same name!
 	Pbind(*[
 		type: \cln, // sets this Pbind to be a SuperClean Pattern
-		snd: \mmd, // \mmd is the default sample pack which comes with SuperClean. This creates (plays) the default sample from the pack, at the default playback speed, with default envelope and amplitude values for each Event
+		snd: \mmd, // \mmd is the default sample pack which comes with SuperClean.  This creates (plays) the default sample from the pack, at the default playback speed, with default envelope and amplitude values for each Event
 	])
 ).play
 )
 ```
 /*
+
+From here it is possible to expand these patterns, adding, for example, using the freq or rel keys for the \saw synthesizer to control its frequency or envelope release time, respectively.  Or for the sample player, using the num or spd keys to control which sample to play and its playback speed, respectively.
+
+*/
+```
+(
+Pdef(0, // name of the Pdef, note that it is set to an Integer. You will find many SuperClean examples which use this naming convention
+	Pbind(*[
+		type: \cln, // sets this Pbind to be a SuperClean Pattern
+		snd: \saw, // creates (plays) a triangle-saw variable wave synthesizer
+		freq: Pseq([300, 600, 420, 210], inf), // creates a sequencer for frequency, on the first step 300Hz, on the second step 600Hz, etc
+		rel: Phprand(0.8, 3.0), // randomly choose a release time between 0.8 and 3 seconds, with preference given to higher values, for each step
+	])
+).play
+)
+
+// or
+
+(
+Pdef(0, // note that evaluating this block of code effectively overwrites the previous one, as they share the same name!
+	Pbind(*[
+		type: \cln, // sets this Pbind to be a SuperClean Pattern
+		snd: \mmd, // \mmd is the default sample pack which comes with SuperClean
+		num: Pwhite(0, 12), // randomly choose a sample from the pack (there are 13 samples total in the pack; the count starts with 0)
+		spd: Prand([1, 0.5, 2], inf), // randomly pick a playback speed from the list: either the default rate (1), half speed and down one octave (0.5), or twice the speed and up one octave (2)
+	])
+).play
+)
+```
+/*
+
+Check out the SoundSources section for a list and description of all the available parameters for each SoundSource.
 
 
 
@@ -325,7 +358,7 @@ sustain:
 
 Determining how a given SoundSource, or other relevant module, reacts to frequency or pitch must technically be done within the SynthDef which defines that module.
 
-Most commonly, freq is the name of the Control argument used to do so in SynthDefs.  Most SoundSources (but not all, eg- /drm, /hat, and /clp) provide freq as an argument name.  Sometimes effects may do so as well, when applicable (\fsh - a frequency shifter).
+Most commonly, freq is the name of the Control argument used to do so in SynthDefs.  Most SoundSources (but not all, eg: /drm, /hat, and /clp) provide freq as an argument name.  Sometimes effects may do so as well, when applicable (\fsh - a frequency shifter).
 
 However, this is in the Pattern section because there are a bunch of what may be considered "convenience" parameters that simplify deriving pitch and/or frequency values that need-not be defined in a module's SynthDef at all.
 
@@ -336,7 +369,7 @@ First, the freq key will be explained:
 ```
 freq:
 ```
-/*  This explicitly specifies the frequency for compatible modules.  Typically this will be a SoundSource, however a few notable InstanceEffects also use this parameter (/fsh).
+/*  This explicitly specifies the frequency for compatible modules.  Typically this will be a SoundSource, however a few notable InstanceEffects also use this parameter (\fsh).
 - Any floating point number between 20 and 20,000 can be used.
   - Values outside of this range will be clipped to fit.
   - The default value is 440.
@@ -373,7 +406,7 @@ midinote:
     - midicps is a message which can be passed to numbers to convert from MIDI notes to cycles-per-second.
 - Any floating point number greater than 15 and less than 135 can be used.
   - These are not technically "pitch values"!  Just a convenient way to derive frequency, so that's why 60.5 can be used.
-  - The default value is 69.0, eg- 440 Hz.
+  - The default value is 69.0, eg: 440 Hz.
 
 
 */
@@ -383,7 +416,7 @@ ctranspose:
 /*  "Chromatic transpose", this is an offset which can be considered in pitch.  It will be added to midinote to provide the final note value which then gets converted into frequency and sent to compatible modules.
 - Any positive or negative floating point number can be used.
   - This number will be converted to Hertz and added to the frequency which is sent to compatible modules.
-  - The default value is 0.0, eg- no offset.
+  - The default value is 0.0, eg: no offset.
 
 
 */
@@ -410,7 +443,7 @@ If this is obscure when written out like this, then perhaps going straight ahead
 This level is builds note from the following parameters, all focused on how a note may be distinct from other notes:
 - degree:  the degree within a scale; 0 is the default
 - mtranspose:  modal transposition; 0 is the default
-- scale:  mapping of scale degrees into semi-tones, eg- Major is [0, 2, 4, 5, 7, 9, 11], which is also the default
+- scale:  mapping of scale degrees into semi-tones, eg: Major is [0, 2, 4, 5, 7, 9, 11], which is also the default
 - stepsPerOctave:  same parameter as the above level, but it also plays a role here; default is still 12
 (all values provided may be floats)
 
@@ -775,7 +808,37 @@ TempoClock.default.tempo = 0.75 // change the tempo of the default TempoClock wi
 ```
 /*
 
+It is also possible to change the tempo directly inside of a running pattern by using the tempo key.  This means that, just like for most other parameters, other patterns can be used to generate a value!
 
+*/
+```
+// evaluate this first! create a new clock for this pattern, set to 60 BPM
+~clock = TempoClock(1).permanent_(true)
+( // now this
+Pdef(2,
+	Pbind(*[
+		type: \cln,
+		snd: \saw,
+		amp: 0.65,
+		tempo: Pseg([1, 10], 10, \lin, inf),
+	])
+).play(~clock)
+)
+```
+/*
+
+Keep in mind that this way of controlling the tempo _does not_ create a new and dedicated clock for the running pattern.  This means that providing the tempo key a value inside of the pattern actually updates the tempo for the respective clock!
+
+Evaluate this line below to confirm, both during the Pdef(2)'s playback and also when stopped:
+*/
+```
+Pdef(2).play(~clock)
+
+~clock.tempo // evaluate this multiple times while the pattern is playing to see the tempo evolve
+
+Pdef(2).stop // evaluate this to stop the Pdef, and then evaluate ~clock.tempo again to verify that it is set to whatever value it stopped at
+```
+/*
 
 
 

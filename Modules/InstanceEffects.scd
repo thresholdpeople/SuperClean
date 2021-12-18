@@ -56,24 +56,36 @@ Add compressor effect
 	SynthDef(name, {
 		var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
 		bendTime = \bendTime.ir(0.2).abs, bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
-		attack = \attack.ir(0.001).abs, release = \release.ir.abs, ampEnvCurve = \ampEnvCurve.ir, gate = \gate.tr(1),
-		timeScale = \timeScale.kr.abs;
+		attack = \attack.ir(0.001).abs, release = \release.ir.abs, ampEnvCurve = \ampEnvCurve.ir(0.3), gate = \gate.tr(1),
+		timeScale = \timeScale.kr(1).abs;
 		var buf = \buf.ir, startPos = \startPos.kr, speed = \speed.kr(1), loop = \loop.kr, trig = \trig.kr(1);
 
 		var bendEnv, rate, holdScale, holdTime, ampEnv, signal;
 
+		var position;
+
 		bendEnv = Env([1, 1, 1 + bend], [bendStartOffset, bendTime * timeScale], [0, 0, bendCurve]).kr(0, gate);
-		rate = freq * 60.midicps.reciprocal * speed * bendEnv;
+		// rate = freq * 60.midicps.reciprocal * speed * bendEnv;
+
+		rate = Line.kr(speed, 0, timeScale) * (freq * 60.midicps.reciprocal * bendEnv);
+
 
 		// if timeScale and release are not explicitly defined, holdTime is the length of the sample, and release is bypassed
 		// if release is set, and timeScale, is not, the hold portion of the Env is bypassed
 		holdScale = (timeScale * (timeScale > 0)) + (1 * (timeScale <= 0) * (release <= 0));
 		holdTime = BufDur.ir(buf) * holdScale;
+
+
 		ampEnv = Env.linen(attack, holdTime, release, amp, ampEnvCurve).kr(Done.freeSelf, gate/*, timeScale*/);
 
-		startPos = startPos.linlin(0, 1, 0, BufFrames.ir(buf)); // for scaling startPos btwn 0 & 1
-		startPos = (startPos * (speed >= 0)) + ((BufFrames.ir(buf) - startPos) * (speed < 0));
-		signal = PlayBuf.ar(sampleNumChannels, buf, BufRateScale.ir(buf) * rate, trig, startPos, loop);
+		position = Sweep.ar(1, rate * BufSampleRate.ir(buf)) + (BufFrames.ir(buf) * startPos);
+
+		// startPos = startPos.linlin(0, 1, 0, BufFrames.ir(buf)); // for scaling startPos btwn 0 & 1
+		// startPos = (startPos * (speed >= 0)) + ((BufFrames.ir(buf) - startPos) * (speed < 0));
+
+
+		signal = PlayBuf.ar(sampleNumChannels, buf, BufRateScale.ir(buf) * rate, trig, position, loop);
+		// signal = PlayBuf.ar(sampleNumChannels, buf, BufRateScale.ir(buf) * rate, trig, startPos, loop);
 
 		signal = signal * ampEnv;
 		signal = CleanPan.ar(signal, ~clean.numChannels, pan);
@@ -106,13 +118,9 @@ Add compressor effect
 					trig: ~rtg ?? { SynthDescLib.global.at(~instrument).controlDict[\trig].defaultValue },
 					loop: ~lop ?? { SynthDescLib.global.at(~instrument).controlDict[\loop].defaultValue }
 				])
-			} { // currently responsible for spawning non-sample sound sources!!!!!!!
-				/*if(~instrument.isNil) {
-					"module 'sound': instrument not found: %".format(~sound).postln
-				} {*/
-					// here, we just derive the arguments as necessary from the environment
-					cleanEvent.sendSynth(~instrument, ~argNames)
-			// }
+			} {
+				// currently responsible for spawning non-sample sound sources!!!!!!!
+				cleanEvent.sendSynth(~instrument, ~argNames)
 			}
 		}
 });
