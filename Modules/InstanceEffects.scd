@@ -57,7 +57,7 @@ Add compressor effect
 		var out = \out.ir, amp = \amp.kr(0.3), pan = \pan.kr, freq = \freq.kr(440).abs, bend = \bend.kr.clip(-1, 1),
 		bendTime = \bendTime.ir(0.2).abs, bendStartOffset = \bendStartOffset.ir.abs, bendCurve = \bendCurve.ir,
 		attack = \attack.ir(0.001).abs, release = \release.ir.abs, ampEnvCurve = \ampEnvCurve.ir(0.3), gate = \gate.tr(1),
-		timeScale = \timeScale.kr(1).abs, sustain = \sustain.kr(1);
+		timeScale = \timeScale.kr(1).abs;
 		var buf = \buf.ir, startPos = \startPos.kr, speed = \speed.kr(1), loop = \loop.kr, trig = \trig.kr(1);
 
 		var bendEnv, rate, holdScale, holdTime, ampEnv, signal;
@@ -67,7 +67,7 @@ Add compressor effect
 		bendEnv = Env([1, 1, 1 + bend], [bendStartOffset, bendTime * timeScale], [0, 0, bendCurve]).kr(0, gate);
 		// rate = freq * 60.midicps.reciprocal * speed * bendEnv;
 
-		rate = Line.kr(speed, 0, sustain) * (freq * 60.midicps.reciprocal * bendEnv);
+		rate = Line.kr(speed, 0, timeScale) * (freq * 60.midicps.reciprocal * bendEnv);
 
 
 		// if timeScale and release are not explicitly defined, holdTime is the length of the sample, and release is bypassed
@@ -76,7 +76,7 @@ Add compressor effect
 		holdTime = BufDur.ir(buf) * holdScale;
 
 
-		ampEnv = Env.linen(attack, timeScale, release, amp, ampEnvCurve).kr(Done.freeSelf, gate/*, timeScale*/);
+		// ampEnv = Env.linen(attack, timeScale, release, amp, ampEnvCurve).kr(Done.freeSelf, gate/*, timeScale*/);
 
 		position = Sweep.ar(1, rate * BufSampleRate.ir(buf)) + (BufFrames.ir(buf) * startPos);
 
@@ -84,10 +84,11 @@ Add compressor effect
 		// startPos = (startPos * (speed >= 0)) + ((BufFrames.ir(buf) - startPos) * (speed < 0));
 
 
-		signal = PlayBuf.ar(sampleNumChannels, buf, BufRateScale.ir(buf) * rate, trig, position, loop);
+		signal = PlayBuf.ar(sampleNumChannels, buf, BufRateScale.ir(buf) * rate, trig, position, loop, 2);
 		// signal = PlayBuf.ar(sampleNumChannels, buf, BufRateScale.ir(buf) * rate, trig, startPos, loop);
 
-		signal = signal * ampEnv;
+		// signal = signal * ampEnv;
+		signal = signal * amp;
 		signal = CleanPan.ar(signal, ~clean.numChannels, pan);
 		Out.ar(out, signal)
 	}).add;
